@@ -1,0 +1,434 @@
+﻿@model QuickProFixer.ViewModels.CreateQuoteViewModel
+
+ <div class="col-12">
+        <br />
+            <div class="col float-start w-100">
+                <img style="width: 200px; height: 200px; object-fit:contain" src="~/UsersProfile/@Model.ClientImgUrl" alt="Client Image"/>
+            </div>
+
+            <div class="col badge text-black card-title">
+                <h2>@Model.Title</h2>
+            </div>
+            <div class="col">
+                <span>@Model.Description</span>
+            </div>
+
+            <br/>
+
+             <div class="col card-text">
+               <span class="badge text-black">Name of Client:</span> @Model.ClienteleFirstName  @Model.ClienteleLastName
+            </div>
+            <div class="col card-text">
+               <span class="badge text-black">Location of the Fix Request:</span> @Model.AddressofFix
+            </div>  
+            <div class="col card-text">
+               <span class="badge text-black">Date of Requested:</span> @Model.DateSummited
+            </div>
+            <div class="col card-text">
+               <span class="badge text-black">Possible start Date:</span> @Model.Urgency
+            </div>         
+
+            <div class="col card-text">
+               <span class="badge text-black">Clientele Rating:</span> @Model.RatingScore
+            </div>
+        
+            <br />
+
+           @* Attached resouces section*@
+            <h3>Attached Resources</h3>
+             <hr/>
+            <div class="row">
+                @if(Model.ImgUrl_1 != null){
+                    <div class="col">
+                       <img class="card-img-top" style="width: 100px; height: 100px; object-fit:contain" 
+                       src="~/RequestImages/@Model.ImgUrl_1" alt="Client Image"/>
+                   
+                   <div class="col">
+                     <a class="card-link" href="~/RequestImages/@Model.ImgUrl_1">view Image Now</a> 
+                   </div>
+                   </div>
+                }
+                @if(Model.ImgUrl_2 != null){
+                    <div class="col">
+                       <img class="card-img-top" style="width: 100px; height: 100px; object-fit:contain" 
+                       src="~/RequestImages/@Model.ImgUrl_2" alt="Client Image"/>
+                   
+
+                    <div class="col">
+                       <a class="card-link" href="~/RequestImages/@Model.ImgUrl_2">view Image Now</a>
+                    </div>
+                    </div>
+                }            
+                @if(Model.ImgUrl_3 != null){
+                    <div class="col">
+                       <img class="card-img-top" style="width: 100px; height: 100px; object-fit:contain" 
+                       src="~/RequestImages/@Model.ImgUrl_3" alt="Client Image"/>
+                    
+                     <div class="col">
+                       <a class="card-link" href="~/RequestImages/@Model.ImgUrl_3">view Image Now</a>
+                    </div>
+                    </div>
+                }
+            </div>
+
+            <br/>
+            <div class="row">
+                @if(Model.AudioUrl != null){ 
+                    <div class="col">
+                       <a class="card-link" href="~/RequestAudio/@Model.AudioUrl">Download Audio Now</a>
+                    </div>
+                }
+
+                @if(Model.VideoUrl != null){               
+                    <div class="col">
+                       <a class="card-link" href="~/RequestVideos/@Model.VideoUrl">Download Video now</a>
+                    </div>
+                }
+
+                @if(Model.PdfUrl != null){               
+                     <div class="col">
+                       <a class="card-link" href="~/RequestPDF/@Model.PdfUrl">Download Pdf Now</a>
+                    </div>
+                }
+            </div>
+
+
+
+
+    <form method="post" enctype="multipart/form-data">
+            <br/>  
+            <h3>Submit Quotation</h3>
+            <hr />        
+
+            <div class="form-group col-8">               
+                <textarea asp-for="QuoteDescription" id="Description" rows="10" placeholder="enter details of quotation here" class="form-control"> @Model.QuoteDescription </textarea>
+                <span asp-validation-for="QuoteDescription" class="text-danger"></span>
+            </div>
+            <br />
+            <br />
+
+
+        @* material cost*@
+
+        <h4>Material Estimate</h4>
+
+        <div style="overflow-x:auto">
+            <table class="table table-responsive-sm" id="MaterialTable">
+                <thead class="table-dark font-weight-bold">
+                    <tr>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Unit Cost(₦)</th>
+                        <th scope="col">Total Cost(₦)</th>
+                        <th scope="col">Delete Item</th>
+                    </tr>
+                </thead>
+                <tbody class="table-secondary">
+                    <tr>
+                        <td><input asp-for="ItemName" id="ItemName" type="text" /></td>
+                        <td> <input asp-for="ItemQuantity" id="ItemQuantity" type="text" /></td>
+                        <td><input asp-for="ItemCostPerItem" id="ItemCostPerItem" type="number" /></td>
+                        <td><input asp-for="ItemCost" id="ItemCost" type="number" /></td>
+                       @* <td> <button class="btn btn-link" id="deleteRow" onclick="deleteItem(this)">delete this Item</button></td>*@
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+
+        <div class="col">
+            <a class="btn btn-link" id="addNewItemBtnClick">Add new Item</a>
+        </div>
+
+
+        <br />
+        <br />
+        
+       @* Additional Entries for Cost and Dates *@
+
+        <div class="col form-group">
+            <div class="col">
+                <label>Labour Cost Rate</label>
+            </div>
+            <div class="col">
+                <input asp-for="LabourRate" type="number" />
+
+                <label>Rate Parameters</label>
+                <select name="@Model.LabourRate" id="@Model.LabourRate">
+                    <option value="sqm">per Square Meter</option>
+                    <option value="Hourly">per Hour</option>
+                    <option value="Daily">per Day</option>
+                    <option value="Block">per Block</option>
+                    <option value="Metre">per Metre</option>
+                </select>
+
+            </div>
+            <span asp-validation-for="LabourRate" class="text-danger"></span>
+        </div>
+
+        <div class="col form-group">
+            <div class="col">
+                <label>Labour Cost</label>
+            </div>
+            <div class="col">
+                <input asp-for="QuoteEstimatedLabourCost" type="number" />
+            </div>
+            <span asp-validation-for="QuoteEstimatedLabourCost" class="text-danger"></span>
+        </div>
+
+        <div class="col form-group">
+            <div class="col">
+                <label>Estimated Cost of Materials (N)</label>
+            </div>
+            <div class="col">
+                <input asp-for="QuoteEstimatedCostOfMaterials" type="number" />
+            </div>
+            <span asp-validation-for="QuoteEstimatedCostOfMaterials" class="text-danger"></span>
+        </div>
+
+
+        <div class="col form-group">
+            <div class="col">
+                <label>Estimated overall Cost</label>
+            </div>
+            <div class="col">
+                <input asp-for="QuoteEstimatedOverallCost" type="number" />
+            </div>
+            <span asp-validation-for="QuoteEstimatedOverallCost" class="text-danger"></span>
+        </div>
+
+        <div class="col form-group">
+            <div class="col">
+                <label>Proposed Start Date</label>
+            </div>
+            <div class="col">
+                <input asp-for="QuoteProposedStartDate.Date" type="date" />
+            </div>
+            <span asp-validation-for="QuoteProposedStartDate" class="text-danger"></span>
+        </div>
+
+
+        <div class="col form-group">
+            <div class="col">
+                <label>Estimated Fix Duration</label>
+            </div>
+            <div class="col">
+                <input asp-for="QuoteEstimatedFixDuration" type="number" />
+            </div>
+            <span asp-validation-for="QuoteEstimatedFixDuration" class="text-danger"></span>
+        </div>
+
+    
+
+        <div class="col form-group">
+            <div class="col">
+                <label>Available to work Urgently?</label>
+            
+            <select name="@Model.Urgency" id="@Model.Urgency">
+                    <option value="High Priority">High Priority</option>
+                    <option value="Normal Priority">Normal Priority</option>
+                    <option value="Normal Priority">Low Priority</option>
+            </select>
+            </div>
+            <span asp-validation-for="QuoteEstimatedFixDuration" class="text-danger"></span>
+        </div>
+       
+        <br/>
+        <br />      
+
+
+        @* Attached Extra Resources*@
+        <h3 class="">Please attach Images, Voice Note, short video Clips (30 secs max) or .pdf files to aid in understanding the Task you want to Fix!!</h3>
+
+      <div class="col-8 justify-content-center">            
+        
+           <br/>
+           <div class="col form-group">
+               <div class="col">
+                    <label>1st Image</label>
+               </div>
+               
+               <div class="col">
+                    <input asp-for="QuoteImgUrl_1" type="file" />
+               </div>               
+                <span asp-validation-for="QuoteImgUrl_1" class="text-danger"></span>
+            </div>
+
+              <br/>
+
+            <div class="form-group">
+                <div class="col">
+                    <label>2nd Image</label>
+                </div>
+                <div class="col">
+                    <input asp-for="QuoteImgUrl_2" type="file" />
+                 </div>
+                <span asp-validation-for="QuoteImgUrl_2" class="text-danger"></span>
+            </div>
+
+              <br/>
+
+            <div class="form-group">
+            <div class="col">
+                    <label>3rd Image</label>
+            </div>
+            <div class="col">
+                     <input asp-for="QuoteImgUrl_3" type="file" />
+             </div>
+                <span asp-validation-for="QuoteImgUrl_3" class="text-danger"></span>
+            </div>
+
+              <br/>
+
+           <div class="form-group">
+            <div class="col">
+                    <label>Video Url</label>
+            </div>
+            <div class="col">
+                <input asp-for="QuoteVideoUrl" type="file" />
+             </div>
+                <span asp-validation-for="QuoteVideoUrl" class="text-danger"></span>
+            </div>
+
+              <br/>
+
+             <div class="form-group">
+            <div class="col">
+                    <label>Audio Url</label>
+            </div>
+            <div class="col">
+                <input asp-for="QuoteAudioUrl" type="file" />
+             </div>
+                <span asp-validation-for="QuoteAudioUrl" class="text-danger"></span>
+            </div>
+
+              <br/>
+
+              <div class="form-group">
+            <div class="col">
+                    <label>Pdf Url</label>
+            </div>
+            <div class="col">
+                <input asp-for="QuotePdfUrl" type="file" />
+             </div>
+                <span asp-validation-for="QuotePdfUrl" class="text-danger"></span>
+            </div>
+         <br/>
+
+
+            <div class="col">
+                <button class="btn btn-primary" asp-action="CreateQuote" id="submitBtn" asp-controller="FixerSpace">submit Quote</button>
+            </div>
+            <br />
+           
+
+
+            @*Hidden Html Tag to Carry other vital information*@
+
+            @Html.HiddenFor(m => m.Materials, new{ id="Materials"})
+            @Html.HiddenFor(m => m.Title, new{ id=Model.Title})
+            @Html.HiddenFor(m => m.RequestId, new{ id=Model.RequestId})
+            @Html.HiddenFor(m => m.ClienteleId, new{ id=Model.ClienteleId})
+            @Html.HiddenFor(m => m.FixerId, new{ id=Model.FixerId})
+            @Html.HiddenFor(m => m.FixerFirstNames, new{ id=Model.FixerFirstNames})
+            @Html.HiddenFor(m => m.FixerLastName, new{ id=Model.FixerLastName})
+            
+
+        </div>
+    </form>
+        <br/>
+    </div>
+
+       
+
+
+<script>
+
+    var materialList =[] 
+    var rowCount = 1
+
+    let indexcount = 0
+    var ItemNameIndex = ""
+    var ItemQuantityIndex = ""
+    var ItemCostPerItemIndex = ""
+    var ItemCostIndex = ""
+
+       
+    $('#addNewItemBtnClick').click(function () {
+
+        indexcount++
+
+        ItemNameIndex = "ItemName" + indexcount
+        ItemQuantityIndex = "ItemQuantity" + indexcount
+        ItemCostPerItemIndex = "ItemCostPerItem" + indexcount
+        ItemCostIndex = "ItemCost" + indexcount
+               
+
+        var table = document.getElementById('MaterialTable')
+       
+        var tr = table.insertRow(); 
+
+        var td1 = tr.insertCell();        
+        td1.innerHTML = '<input id=' + '"' + ItemNameIndex + '"' + 'type="text" asp-for=' + '"' + ItemNameIndex + '"' + ' data-val="true"/>';
+
+        var td2 = tr.insertCell();
+        td2.innerHTML = '<input id=' + '"' + ItemQuantityIndex + '"' + ' type = "text" asp-for=' + '"' + ItemQuantityIndex + '"' + 'data-val="true" /> ';
+
+        var td3 = tr.insertCell();
+        td3.innerHTML = '<input id=' + '"' + ItemCostPerItemIndex + '"' + 'type="number" asp-for=' + '"' + ItemCostPerItemIndex + '"' + 'data-val="true"/>';
+
+
+        var td4 = tr.insertCell();
+        td4.innerHTML = '<input id=' + '"' + ItemCostIndex + '"' + 'type="number" asp-for=' + '"' + ItemCostIndex + '"' + 'data-val="true"/>';
+
+        var td5 = tr.insertCell();
+        var deleteRowBtn = '"' + 'deleteRowBtn' + indexcount +'"'
+        td5.innerHTML = '<button class="btn btn-link" id=' + deleteRowBtn + ' onclick="deleteItem(this)" >delete this Item</button>';
+
+        rowCount = table.rows.length;   
+    });
+
+    function deleteItem(r) {
+       var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("MaterialTable").deleteRow(i);
+    }
+
+    $('#submitBtn').click(function () { 
+           
+        rowCount = rowCount-1;
+
+            for (var i = 1; i < rowCount ; i++) {
+                
+                ItemName =   'ItemName' + i
+                ItemQuantity = "ItemQuantity" + i
+                ItemCostPerItem = 'ItemCostPerItem' + i
+                ItemCost = 'ItemCost' + i                
+                
+               
+                var ItemNameCell = document.getElementById(ItemName).value
+                var ItemQuantityCell = document.getElementById(ItemQuantity).value
+                var ItemCostPerItemCell = document.getElementById(ItemCostPerItem).value
+                var ItemCostCell = document.getElementById(ItemCost).value
+                ItemNameIndex = "ItemName" + indexcount
+
+                var materialItemList = "materialItemList" + i
+
+
+            materialItemList = { Name: ItemNameCell, Quantity: ItemQuantityCell, CostPerItem: ItemCostPerItemCell, Cost: ItemCostCell }
+                materialList.push(materialItemList)               
+               
+             }
+        var serializedMateral = JSON.stringify(materialList)
+        $('#Materials').val(serializedMateral)
+        $('#MaterialCount').val(rowCount)
+    });
+
+
+    //$('#deleteRowBtn').click(function () {
+    //    var d = document.getElementById('deleteRowBtn').parentNode.parentNode.rowIndex;
+    //    document.getElementById("MaterialTable").deleteRow(i);
+    //});
+
+
+</script>

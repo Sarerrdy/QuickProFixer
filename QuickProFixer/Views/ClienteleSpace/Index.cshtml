@@ -1,0 +1,49 @@
+﻿@model QuickProFixer.ViewModels.CSActiveRequestViewModel
+
+<h4 class="text-center">welcome @Model.ClienteleName to your Clientele Space</h4>
+
+<h5> Dashboard || Submitted Requests</h5>
+
+ <hr/>
+ <br/>
+
+
+<div class="container-fluid">
+     
+    @foreach(var request in @Model.RequestMiniTemplateViewModels){
+
+        <div id="@request.SentNotificationId" class="col bg-light bg-opacity-50">
+            @await Html.PartialAsync("_RequestThumbPartial", request)
+
+                  
+             <div class="float-end">
+                <a class="btn btn-link" asp-controller="ClienteleSpace" asp-action="RequestDetails" asp-route-RequestId="@request.RequestId"> View Details </a>
+            </div>
+
+            <div class="float-end badge text-black">
+               @{var awaitingResponse = request.SentNotisficationCount - request.QuoteCount - request.RejectedRequestCount;}
+               Awaiting Quotes from @awaitingResponse Fixers
+            </div>
+
+            <div class="float-end badge text-black">
+                @request.QuoteCount Quotes Received
+            </div>
+
+            <div class="float-end badge text-black"> | </div>
+
+            <div class="float-end badge text-black">
+                @request.RejectedRequestCount Fixers Declined your Request
+            </div>
+
+            <div class="float-end badge text-black"> | </div>
+
+            <div class="float-end badge text-black">
+                @request.SentNotisficationCount Fixers Received this Request
+            </div>
+       </div>
+        
+        <br/>
+        <hr/>
+       
+    }
+</div>

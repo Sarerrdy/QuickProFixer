@@ -1,0 +1,22 @@
+﻿@page
+@model QuickProFixer.Areas.Identity.Pages.Account.RegistrationConfirmationModel
+@{
+}
+
+@{
+    ViewData["Title"] = "Registration confirmation";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+        @*Register as Clientel*@
+        <form id="registerClienteleForm" asp-route-returnUrl="@*@Model.ReturnUrl*@" method="post" enctype="multipart/form-data">
+            <h2>You have successfully created an account on QuickProFixer.. Please go ahead and login </h2>
+         </form>
+   </div>
+</div>
+
+

@@ -1,0 +1,82 @@
+﻿@using static QuickProFixer.ViewModels.FSRequestViewModel
+@model QuickProFixer.ViewModels.FSRequestViewModel
+
+
+
+<h5 class="text-center">Welcome @Model.FixerName to your Fixer Space</h5>
+<br />
+
+<h4> DashBoard || Requests Awaiting a Quote </h4>
+
+ <hr/>
+ <br/>
+
+
+<div class="container-fluid">
+    @{
+        //set ResponseCode Flag
+        Model.Flags = ResponseCode.RejectRequest;
+
+        @foreach (var request in @Model.RequestMiniTemplateViewModels)
+        {            
+            <div id="@request.SentNotificationId" class="col bg-light bg-opacity-50">
+                @await Html.PartialAsync("_RequestThumbPartial", request)
+
+                <div class="col float-end">
+                    <a class="btn btn-link" asp-controller="FixerSpace" asp-action="CreateQuote" asp-route-RequestId="@request.RequestId"> View Details and Submit a Quote</a>
+                </div>
+               
+               
+                <div class="col float-end">
+                        <a class="btn btn-link" id="RejectRequestBtn" onclick="RejectRequestOnClick(@request.SentNotificationId)"> Reject this Request</a>
+                </div>
+
+                <br />
+                <hr />
+
+            </div>
+
+           
+        }
+
+            @Html.HiddenFor(m => m.Flags, new { id = Model.Flags })            
+            @Html.HiddenFor(m => m.FixerId, new { id = Model.FixerId })
+        } 
+   
+</div>
+
+
+
+<script>
+    
+
+    function RejectRequestOnClick(SentNotificationId) {
+
+      
+        var fixerId = @Html.Raw(Json.Serialize(Model.FixerId));
+        var flag = @Html.Raw(Json.Serialize(Model.Flags));
+        var msg = "You have successfully Rejected this Request!!!"
+
+
+       
+        var flagsStringify = JSON.stringify(flag);
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/api/FixerSpace/" + SentNotificationId + "/" + fixerId + "/" + flagsStringify + "/" + msg, true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send();
+
+        xhttp.onloadend = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var response = JSON.parse(this.responseText);
+                alert(response);
+
+                var div = document.getElementById(SentNotificationId);
+                    div.parentNode.removeChild(div)
+
+               // $(this).classList.add('disabled')
+               // document.querySelector('#RejectRequestBtn').classList.add('disabled')
+            }
+        }
+    }
+</script>

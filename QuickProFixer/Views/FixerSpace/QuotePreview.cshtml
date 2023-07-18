@@ -1,0 +1,259 @@
+﻿@model QuickProFixer.ViewModels.CreateQuoteViewModel
+
+<div class="col-12">
+    <br />
+    <h4>Preview Quote</h4>
+    <br/>
+    <div class="col float-start w-100">
+        <img style="width: 200px; height: 200px; object-fit:contain" src="~/UsersProfile/@Model.ClientImgUrl" alt="Client Image" />
+    </div>
+
+    <div class="col badge text-black card-title">
+        <h2> @Model.Title</h2>
+    </div>
+    <div class="col">
+        <span>@Model.Description</span>
+    </div>
+
+    <br />
+
+    <div class="col card-text">
+        <span class="badge text-black">Name of Client: </span> @Model.ClienteleFirstName  @Model.ClienteleLastName
+    </div>
+    <div class="col card-text">
+        <span class="badge text-black">Location of the Fix Request:</span> @Model.AddressofFix
+    </div>
+    <div class="col card-text">
+        <span class="badge text-black">Date of Requested:</span> @Model.DateSummited.ToShortDateString()
+    </div>
+    <div class="col card-text">
+        <span class="badge text-black">Possible start Date:</span> @Model.Urgency
+    </div>
+  
+  @*  @{
+        if (Model.IsCurrentUserClientele)
+        {
+            <div class="col card-text">
+                <span class="badge text-black">This Request Notification was sent to:</span> @Model.SentNotisficationCount Fixers
+            </div>
+
+            <div class="col card-text">
+                <span class="badge text-black">Total Response Count for this Request:</span> @Model.ResponsesCount
+            </div>
+        }
+    }    *@
+
+    <div class="col card-text">
+        <span class="badge text-black">Clientele Rating:</span> @Model.RatingScore
+    </div>
+
+    <br />
+
+    @* Attached resouces section*@
+    <h4>Attached Resources</h4>
+    <hr />
+    <div class="row">
+        @if (Model.ImgUrl_1 != null)
+        {
+            <div class="col">
+                <img class="card-img-top" style="width: 100px; height: 100px; object-fit:contain"
+                     src="~/RequestImages/@Model.ImgUrl_1" alt="Client Image" />
+
+                <div class="col">
+                    <a class="card-link" href="~/RequestImages/@Model.ImgUrl_1">view Image Now</a>
+                </div>
+            </div>
+        }
+        @if (Model.ImgUrl_2 != null)
+        {
+            <div class="col">
+                <img class="card-img-top" style="width: 100px; height: 100px; object-fit:contain"
+                     src="~/RequestImages/@Model.ImgUrl_2" alt="Client Image" />
+
+
+                <div class="col">
+                    <a class="card-link" href="~/RequestImages/@Model.ImgUrl_2">view Image Now</a>
+                </div>
+            </div>
+        }
+        @if (Model.ImgUrl_3 != null)
+        {
+            <div class="col">
+                <img class="card-img-top" style="width: 100px; height: 100px; object-fit:contain"
+                     src="~/RequestImages/@Model.ImgUrl_3" alt="Client Image" />
+
+                <div class="col">
+                    <a class="card-link" href="~/RequestImages/@Model.ImgUrl_3">view Image Now</a>
+                </div>
+            </div>
+        }
+    </div>
+
+    <br />
+    <div class="row">
+        @if (Model.AudioUrl != null)
+        {
+            <div class="col">
+                <a class="card-link" href="~/RequestAudio/@Model.AudioUrl">Download Audio Now</a>
+            </div>
+        }
+
+        @if (Model.VideoUrl != null)
+        {
+            <div class="col">
+                <a class="card-link" href="~/RequestVideos/@Model.VideoUrl">Download Video now</a>
+            </div>
+        }
+
+        @if (Model.PdfUrl != null)
+        {
+            <div class="col">
+                <a class="card-link" href="~/RequestPDF/@Model.PdfUrl">Download Pdf Now</a>
+            </div>
+        }
+    </div>
+
+    <br />
+    <hr />
+    <div class="bg-light container-fluid">
+        <br />
+        <div class="bg-black text-light">Submitted Quote Details</div>
+        <div><h6 class="badge">Description:</h6></div>
+        <div class="col">
+            <span>@Model.QuoteDescription</span>
+        </div>
+
+        <br />
+
+        <div class="col card-text"> 
+            <span class="badge text-black"> Fixer's Name::</span>  <a class="badge text-black" asp-action="FixerDetails" asp-route-FixerId="@Model.FixerId"> @Model.FixerFirstNames  @Model.FixerLastName </a>
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Fixer Address:</span> @Model.FixerAddress
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Date submitted:</span> @Model.QuoteDateofResponse.ToShortDateString()
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Estimated Cost of Materials:</span> @Model.QuoteEstimatedCostOfMaterials
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Rate of Labour:</span> @Model.LabourRate
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Estimated Labour Cost:</span> @Model.QuoteEstimatedLabourCost
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Estimated Overall Cost:</span> @Model.QuoteEstimatedOverallCost
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Time Frame:</span> @Model.QuoteEstimatedFixDuration days
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Urgency:</span> @Model.Urgency
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Fixer Ratings:</span> @Model.RatingScore
+        </div>
+
+        <br />
+        <div><h6>Materials Estimate:</h6></div>
+        <table class="table table-secondary table-responsive-sm">
+            <thead class="table-dark">
+                <tr>
+                    <td>Item Name(₦)</td>
+                    <td>Quantity</td>
+                    <td>Unit Cost(₦)</td>
+                    <td>Total Cost(₦)</td>
+                </tr>
+            </thead>
+
+            <tbody id="table_body">
+                @foreach (var p in Model.MaterialsList)
+                {
+                    <tr>
+                        <td> @p.Name</td>
+                        <td> @p.Quantity</td>
+                        <td> @p.CostPerItem</td>
+                        <td> @p.Cost</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>        
+
+        <br />
+
+        @* Attached resouces for Quote section*@
+        <h4>Media Resources for the Quote</h4>
+        <hr />
+        <div class="row">
+            @if (Model.QuotePrevImgUrl_1 != null)
+            {
+                <div class="col">
+                    <img class="card-img-top" style="width: 100px; height: 100px; object-fit:contain"
+                         src="~/RequestImages/@Model.QuotePrevImgUrl_1" alt="Client Image" />
+
+                    <div class="col">
+                        <a class="card-link" href="~/RequestImages/@Model.QuotePrevImgUrl_1">view Image Now</a>
+                    </div>
+                </div>
+            }
+            @if (Model.QuotePrevImgUrl_2 != null)
+            {
+                <div class="col">
+                    <img class="card-img-top" style="width: 100px; height: 100px; object-fit:contain"
+                         src="~/RequestImages/@Model.QuotePrevImgUrl_2" alt="Client Image" />
+
+
+                    <div class="col">
+                        <a class="card-link" href="~/RequestImages/@Model.QuotePrevImgUrl_2">view Image Now</a>
+                    </div>
+                </div>
+            }
+            @if (Model.QuotePrevImgUrl_3 != null)
+            {
+                <div class="col">
+                    <img class="card-img-top" style="width: 100px; height: 100px; object-fit:contain"
+                         src="~/RequestImages/@Model.QuotePrevImgUrl_3" alt="Client Image" />
+
+                    <div class="col">
+                        <a class="card-link" href="~/RequestImages/@Model.QuotePrevImgUrl_3">view Image Now</a>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <br />
+        <div class="row">
+            @if (Model.QuotePrevAudioUrl != null)
+            {
+                <div class="col">
+                    <a class="card-link" href="~/RequestAudio/@Model.QuotePrevAudioUrl">Download Audio Now</a>
+                </div>
+            }
+
+            @if (Model.QuotePrevVideoUrl != null)
+            {
+                <div class="col">
+                    <a class="card-link" href="~/RequestVideos/@Model.QuotePrevVideoUrl">Download Video now</a>
+                </div>
+            }
+
+            @if (Model.QuotePrevPdfUrl != null)
+            {
+                <div class="col">
+                    <a class="card-link" href="~/RequestPDF/@Model.QuotePrevPdfUrl">Download Pdf Now</a>
+                </div>
+            }
+        </div>
+
+        <br />
+    </div>
+    </div>
+    
+    <br />
+   
+
+
+

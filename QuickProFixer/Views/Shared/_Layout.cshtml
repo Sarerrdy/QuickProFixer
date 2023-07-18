@@ -1,0 +1,151 @@
+﻿
+
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QuickProFixer</title>
+   
+     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/QuickProFixer.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="container col-10">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">#QuickProFixer</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-start mx-4">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="ClienteleSpace" asp-action="Index" asp-route-clienteleId="1">How it Works</a>
+                        </li>
+                    </ul>
+                </div>
+
+                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                    <ul class="navbar-nav flex-grow">   
+                       
+                        <li class="nav-item">
+                            <partial name="_LoginPartial.cshtml" />
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+    <div class="row">
+
+@*Sidebar menu*@
+
+
+    <div class="col-2"> 
+        <div class="row accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Fixers Space
+                </button>
+            </h2>               
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <ul>
+                    <li class="d-flex">
+                                <a class="accordion-body text-dark" asp-action="Index" asp-controller="FixerSpace">Dashboard</a>
+                    </li>  
+                    <li class="d-flex">
+                            <a class="accordion-body text-dark" asp-action="QuotesWithOpenRequest" asp-controller="FixerSpace">Quotes with opened Request</a>
+                    </li>
+
+                        <li class="d-flex">
+                            <a class="accordion-body text-dark" asp-action="QuotesWithClosedRequest" asp-controller="FixerSpace">Quotes with closed Request</a>
+                        </li>
+
+                    <li class="d-flex">
+                            <a class="accordion-body text-dark" asp-action="ActiveFixes" asp-controller="FixerSpace">Active Fixes</a>
+                    </li>
+                    <li class="d-flex">
+                            <a class="accordion-body text-dark" asp-action="CompletedFixes" asp-controller="FixerSpace">Completed Fixes</a>
+                    </li>
+                        <li class="d-flex">
+                            <a class="accordion-body text-dark" asp-action="RejectedQuotes" asp-controller="FixerSpace">Rejected Quotes</a>
+                        </li>
+                        <li class="d-flex">
+                            <a class="accordion-body text-dark" asp-action="RejectedRequest" asp-controller="FixerSpace">Rejected Requests</a>
+                        </li>
+
+                    </ul>
+            </div>
+        </div>
+
+
+            <div class="row accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        Clientele Space
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                <ul>
+                    <li class="d-flex">
+                            <a class="accordion-body text-dark" asp-action="Index" asp-controller="ClienteleSpace">Dashboard</a>
+                    </li>
+@*                        <li class="d-flex">
+                            <a class="accordion-body text-dark" asp-action="ReceivedQuotes" asp-controller="ClienteleSpace" asp-route-clienteleId="1">Received Quotes</a>
+                        </li>*@
+                    <li class="d-flex">
+                            <a class="accordion-body text-dark" asp-action="ActiveRequests" asp-controller="ClienteleSpace">Active Requests</a>
+                    </li>
+                    <li class="d-flex">
+                            <a class="accordion-body text-dark" asp-action="CompletedRequest" asp-controller="ClienteleSpace">Completed Fixes</a>
+                    </li>
+ @*                   <li class="d-flex">
+                            <a class="accordion-body text-dark" asp-action="RejetedRequests" asp-controller="ClienteleSpace">Rejeted Requests</a>
+                    </li>*@
+                   @* <li class="d-flex">
+                            <a class="accordion-body text-dark" asp-action="RejectedQuotes" asp-controller="ClienteleSpace" asp-route-clienteleId="1">>Rejected Quotes</a>
+                    </li>*@
+                </ul>                
+            </div>
+            </div> 
+    </div>
+
+
+ @*Body main content*@
+    <div class="col-sm-8 bg-black bg-opacity-25 min-vh-100">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+ @*Empty right sightBar for Advert*@
+    <div class="col-sm-2">
+        <div> </div>
+    </div>
+ </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - QuickProFixer - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+   
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,389 @@
+﻿@using static QuickProFixer.ViewModels.FSRequestViewModel;
+@model QuickProFixer.ViewModels.RequestTemplateViewModel
+
+<div class="row">
+
+    <div class="col-12">
+        <br />
+        <h4>Details of Request with associated Quotes</h4>
+        <br />
+        <div class="col float-start w-100">
+            <img style="width: 200px; height: 200px; object-fit:contain" src="~/UsersProfile/@Model.ClientImgUrl" alt="Client Image" />
+        </div>
+
+        <div class="col badge text-black card-title">
+            <h2>@Model.Title</h2>
+        </div>
+        <div class="col">
+            <span>@Model.Description</span>
+        </div>
+
+        <br />
+
+        <div class="col card-text">
+            <span class="badge text-black">Name of Client:</span> @Model.ClienteleFirstName  @Model.ClienteleLastName
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Location of the Fix Request:</span> @Model.Address
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Date of Requested:</span> @Model.DateSummited.ToShortDateString()
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Possible start Date:</span> @Model.Urgency
+        </div>
+
+        <div class="col card-text">
+            <span class="badge text-black">This Request Notification was sent to:</span> @Model.SentNotisficationCount Fixers
+        </div>
+
+        <div class="col card-text">
+            <span class="badge text-black">Total Response Count for this Request:</span> @Model.QuotesCount
+        </div>
+
+        <div class="col card-text">
+            <span class="badge text-black">Clientele Rating:</span> @Model.RatingScore
+        </div>
+
+        <br />
+
+        @* Attached resouces section*@
+        <h3>Attached Resources</h3>
+        <hr />
+        <div class="row">
+            @if (Model.ImgUrl_1 != null)
+            {
+                <div class="col">
+                    <img class="card-img-top" style="width: 100px; height: 100px; object-fit:contain"
+                         src="~/RequestImages/@Model.ImgUrl_1" alt="Client Image" />
+
+                    <div class="col">
+                        <a class="card-link" href="~/RequestImages/@Model.ImgUrl_1">view Image Now</a>
+                    </div>
+                </div>
+            }
+            @if (Model.ImgUrl_2 != null)
+            {
+                <div class="col">
+                    <img class="card-img-top" style="width: 100px; height: 100px; object-fit:contain"
+                         src="~/RequestImages/@Model.ImgUrl_2" alt="Client Image" />
+
+
+                    <div class="col">
+                        <a class="card-link" href="~/RequestImages/@Model.ImgUrl_2">view Image Now</a>
+                    </div>
+                </div>
+            }
+            @if (Model.ImgUrl_3 != null)
+            {
+                <div class="col">
+                    <img class="card-img-top" style="width: 100px; height: 100px; object-fit:contain"
+                         src="~/RequestImages/@Model.ImgUrl_3" alt="Client Image" />
+
+                    <div class="col">
+                        <a class="card-link" href="~/RequestImages/@Model.ImgUrl_3">view Image Now</a>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <br />
+        <div class="row">
+            @if (Model.AudioUrl != null)
+            {
+                <div class="col">
+                    <a class="card-link" href="~/RequestAudio/@Model.AudioUrl">Download Audio Now</a>
+                </div>
+            }
+
+            @if (Model.VideoUrl != null)
+            {
+                <div class="col">
+                    <a class="card-link" href="~/RequestVideos/@Model.VideoUrl">Download Video now</a>
+                </div>
+            }
+
+            @if (Model.PdfUrl != null)
+            {
+                <div class="col">
+                    <a class="card-link" href="~/RequestPDF/@Model.PdfUrl">Download Pdf Now</a>
+                </div>
+            }
+        </div>
+
+        <br />
+    </div>
+
+    <br />
+    <br />
+
+@*Accepted Quote Section*@
+    <hr />
+    <div class="bg-light container-fluid">
+        <br />
+        <div class="bg-black text-light">Accepted Quote Details</div>
+        <div><h6 class="badge">Description:</h6></div>
+        <div class="col">
+            <span>@Model.CreateQuoteViewModel.QuoteDescription</span>
+        </div>
+
+        <br />
+
+        <div class="col card-text">
+
+            <a class="badge text-black" href="">Fixer's Name:     @Model.CreateQuoteViewModel.FixerFirstNames  @Model.CreateQuoteViewModel.FixerLastName </a>
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Fixer Address:</span> @Model.CreateQuoteViewModel.FixerAddress
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Date submitted:</span> @Model.CreateQuoteViewModel.QuoteDateofResponse
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Estimated Cost of Materials:</span> @Model.CreateQuoteViewModel.QuoteEstimatedCostOfMaterials
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Rate of Labour:</span> @Model.CreateQuoteViewModel.LabourRate
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Estimated Labour Cost:</span> @Model.CreateQuoteViewModel.QuoteEstimatedLabourCost
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Estimated Overall Cost:</span> @Model.CreateQuoteViewModel.QuoteEstimatedOverallCost
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Time Frame:</span> @Model.CreateQuoteViewModel.QuoteEstimatedFixDuration
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Fixer Ratings:</span> @Model.RatingScore
+        </div>
+
+       @* @Model.Flags = ResponseCode.ClieteleMarksAsCompleted;*@
+
+        <div class="col float-end">
+            <a class="btn btn-link" id="MarkAsCompletedBtn" onclick="MarkAsCompletedOnClick(@Model.AcceptedQuoteSentNotisficationId, @Model.CreateQuoteViewModel.FixerId)"> Mark as completed</a>
+        </div>
+
+
+        <br />
+        <div><h6>Materials Estimate:</h6></div>
+        <table class="table table-secondary table-responsive-sm">
+            <thead class="table-dark">
+                <tr>
+                    <td>Item Name(₦)</td>
+                    <td>Quantity</td>
+                    <td>Unit Cost(₦)</td>
+                    <td>Total Cost(₦)</td>
+                </tr>
+            </thead>
+
+            <tbody id="table_body">
+                @foreach (var p in Model.CreateQuoteViewModel.MaterialsList)
+                {
+                    <tr>
+                        <td> @p.Name</td>
+                        <td> @p.Quantity</td>
+                        <td> @p.CostPerItem</td>
+                        <td> @p.Cost</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+        <br />
+
+        @* Attached resouces for Quote section*@
+        <h4>Media Resources for the Quote</h4>
+        <hr />
+        <div class="row">
+            @if (Model.CreateQuoteViewModel.QuotePrevImgUrl_1 != null)
+            {
+                <div class="col">
+                    <img class="card-img-top" style="width: 100px; height: 100px; object-fit:contain"
+                         src="~/RequestImages/@Model.CreateQuoteViewModel.QuotePrevImgUrl_1" alt="Client Image" />
+
+                    <div class="col">
+                        <a class="card-link" href="~/RequestImages/@Model.CreateQuoteViewModel.QuotePrevImgUrl_1">view Image Now</a>
+                    </div>
+                </div>
+            }
+            @if (Model.CreateQuoteViewModel.QuotePrevImgUrl_2 != null)
+            {
+                <div class="col">
+                    <img class="card-img-top" style="width: 100px; height: 100px; object-fit:contain"
+                         src="~/RequestImages/@Model.CreateQuoteViewModel.QuotePrevImgUrl_2" alt="Client Image" />
+
+
+                    <div class="col">
+                        <a class="card-link" href="~/RequestImages/@Model.CreateQuoteViewModel.QuotePrevImgUrl_2">view Image Now</a>
+                    </div>
+                </div>
+            }
+            @if (Model.CreateQuoteViewModel.QuotePrevImgUrl_3 != null)
+            {
+                <div class="col">
+                    <img class="card-img-top" style="width: 100px; height: 100px; object-fit:contain"
+                         src="~/RequestImages/@Model.CreateQuoteViewModel.QuotePrevImgUrl_3" alt="Client Image" />
+
+                    <div class="col">
+                        <a class="card-link" href="~/RequestImages/@Model.CreateQuoteViewModel.QuotePrevImgUrl_3">view Image Now</a>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <br />
+        <div class="row">
+            @if (Model.CreateQuoteViewModel.QuotePrevAudioUrl != null)
+            {
+                <div class="col">
+                    <a class="card-link" href="~/RequestAudio/@Model.CreateQuoteViewModel.QuotePrevAudioUrl">Download Audio Now</a>
+                </div>
+            }
+
+            @if (Model.CreateQuoteViewModel.QuotePrevVideoUrl != null)
+            {
+                <div class="col">
+                    <a class="card-link" href="~/RequestVideos/@Model.CreateQuoteViewModel.QuotePrevVideoUrl">Download Video now</a>
+                </div>
+            }
+
+            @if (Model.CreateQuoteViewModel.QuotePrevPdfUrl != null)
+            {
+                <div class="col">
+                    <a class="card-link" href="~/RequestPDF/@Model.CreateQuoteViewModel.QuotePrevPdfUrl">Download Pdf Now</a>
+                </div>
+            }
+        </div>
+
+       
+        <br />
+    </div>
+
+    <br />
+    <br/>
+    <hr />
+
+    @* Quotes section*@
+    <h4 class="bg-black bg-opacity-75 fw-bold  text-white"> Received Quotes</h4>
+
+    <div class="container-fluid">
+
+        @{
+
+            if (Model.QuoteMiniTemplateViewModels.Count() > 0)
+            {
+                foreach (var quotes in Model.QuoteMiniTemplateViewModels)
+                {
+                    Model.Flags = ResponseCode.ClieteleMarksAsCompleted;
+
+                    <div id="@quotes.sentNotificationId" class="col bg-light bg-opacity-50">
+                        @await Html.PartialAsync("_QuoteMiniPartial", quotes)
+
+                       @* <div class="col float-end">
+                            <a class="btn btn-link" id="AcceptQuoteBtn" onclick="AcceptQuoteOnClick(@quotes.sentNotificationId, @quotes.FixerId)">  Accept Quote</a>
+                        </div> *@
+
+                        <div class="col float-end">
+                            <a class="btn btn-link" asp-controller="FixerSpace" asp-action="QuotePreview" asp-route-QuoteId="@quotes.QuoteId"> View Details </a>
+                        </div>
+
+                        <br />
+                        <hr />
+                    </div>
+                }
+            }
+            else
+            {
+                <h5> No Quote have received for this request</h5>
+            }
+        }
+    </div>
+
+
+    @* SentNotification section*@
+    <h4 class="bg-black bg-opacity-75 text-white">Awaiting Quotes from the following Fixers</h4>
+
+    <div class="container-fluid">
+
+        @{
+
+            if (Model.sentNotifications.Count() > 0)
+            {
+                foreach (var fixer in Model.FixerMiniTemplateViewModels)
+                {
+
+                    <div class="col bg-light bg-opacity-50">
+                        <div class="row">
+                            <div class="col-1">
+                                <img style="max-width:80px; max-height:60px" src="~/UsersProfile/@fixer.FixerImgUrl" alt="Profile Image" />
+                            </div>
+                            <div class="col-10">
+                                <div class="col badge text-black card-title"><h4>@fixer.FullName</h4></div>
+                                <div class="col card-body">
+                                    <span>@fixer.ShortDescription</span>
+                                </div>
+                                <div class="col card-text">
+                                    <span class="badge text-black">Rating:</span> @Model.RatingScore
+                                </div>
+                                <div class="col card-text">
+                                    <span class="badge text-black">Completed Fixes:</span> @fixer.NoOfCompletedFixes
+                                </div>
+                                <div class="col card-text">
+                                    <span class="badge text-black">Address:</span> @fixer.Location
+                                </div>
+
+                                <br />
+                                <div class="col float-end">
+                                    <a class="btn-link" asp-controller="FixerSpace" asp-action="FixerDetails" asp-route-FixerId="@fixer.FixerId">view more details about @fixer.FirstName</a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <hr />
+                    </div>
+                }
+            }
+        }
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+    function MarkAsCompletedOnClick(SentNotificationId, FixerId) {
+
+        var flag = @Html.Raw(Json.Serialize(Model.Flags));
+        var msg = "You have successfully marked this Request as completed...Please do note that the Fixer MUST also mark this Request as completed"
+
+
+
+        var flagsStringify = JSON.stringify(flag);
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/api/ClienteleSpace/" + SentNotificationId + "/" + FixerId + "/" + flagsStringify + "/" + msg, true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send();
+
+        xhttp.onloadend = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var response = JSON.parse(this.responseText);
+                alert(response);
+
+                var div = document.getElementById(SentNotificationId);
+                div.parentNode.removeChild(div)
+
+                //location.href = '~/ClienteleSpace/ActiveRequests?clienteleId= ' + ClienteleId + ';
+
+                 //$(this).classList.add('disabled')
+                document.querySelector('#MarkAsCompletedBtn').classList.add('disabled')
+            }
+        }
+    }
+</script>
+

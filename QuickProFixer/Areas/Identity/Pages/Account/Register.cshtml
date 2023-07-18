@@ -1,0 +1,41 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+
+        <section>
+            <form id="account" method="post">
+                <h4>Please choose one Registration mode</h4>
+                <hr />
+                
+                <div class="form-group active" id="RegAsClientele">
+                    <a class="link-btn btn-primary text-white text-center form-control" asp-page="RegisterAsClientele"> Click here to Register as a Clientele </a>
+                </div>
+                <br />
+
+                <div class="form-group">
+                 <a class="link-btn btn-primary text-white text-center form-control" asp-page="RegisterAsFixer"> Click here to Register as a Fixer </a>
+                </div>              
+            </form>
+        </section>
+        <br/>
+        <br />
+
+       
+    </div>
+
+</div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+  
+}

@@ -1,0 +1,40 @@
+﻿@model QuickProFixer.ViewModels.RequestMiniTemplateViewModel
+
+<div class="row">
+    
+    <div class="col">
+     
+            <div class="col badge text-black card-title"><h5>@Model.Title</h5></div>
+            <div class="col card-body">
+                <span>@Model.ShortDescription</span>
+            </div>
+            
+            <div class="col card-text">
+               <span class="badge text-black">Date of Requested:</span> @Model.DateSummited.ToShortDateString()
+            </div>
+            <div class="col card-text">
+               <span class="badge text-black">Urgency:</span> @Model.Urgency
+            </div>
+        @{
+            if (!string.IsNullOrEmpty(Model.ClientName))
+            {
+                <div class="col card-text">
+                    <span class="badge text-black">Name of Client:</span> @Model.ClientName
+                </div>
+            }
+            if (!string.IsNullOrEmpty(Model.FixerName))
+            {
+                <div class="col card-text">
+                    <span class="badge text-black">Name of Fixer:</span> @Model.FixerName
+                </div>
+            }
+           
+        } 
+
+             <div class="col card-text">
+               <span class="badge text-black">Request Type:</span> @Model.ServiceType
+            </div>
+
+       
+    </div>
+</div>

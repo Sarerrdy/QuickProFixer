@@ -1,0 +1,66 @@
+﻿@model QuickProFixer.ViewModels.FixerMiniTemplateViewModel
+
+
+<div class="row">
+        <div class="card col-1 bg-light">    
+            <img src="@Model.FixerImgUrl" alt="Profile Image" style="width:80px; height:80px; margin:0px,5px; object-fit:contain"/>
+        </div>
+    <div class="col bg-light">
+        <div class="col badge text-black card-title"><h4>@Model.FullName</h4></div>
+                <div class="col card-body">
+                    <span>@Model.ShortDescription</span>
+                </div>
+                <div class="col card-text">
+                   <span class="badge text-black">Rating:</span> @Model.RatingScore
+                </div>
+                <div class="col card-text">
+                   <span class="badge text-black">Completed Fixes:</span> @Model.NoOfCompletedFixes
+                </div>
+                <div class="col card-text">
+                   <span class="badge text-black">Address:</span> @Model.Location
+                </div>
+                <div class="row">           
+                     <div class="col">
+                         <a class="btn-link" asp-controller="FixerSpace" asp-action="FixerDetails" asp-route-FixerId="@Model.FixerId">view more details about @Model.FirstName</a>               
+                    </div>
+                    <div class="col float-end">
+                         <button class="btn btn-link bg-white BtnDisableClass" id="@Model.BtnClassName"> send Request to @Model.FirstName</button>               
+                    </div>
+                 </div>     
+        </div>
+
+
+</div>
+
+
+
+<script>
+ 
+    //function SendRequestOnClick(){
+$('#@Model.BtnClassName').click(function(){
+
+        var requestId = @Html.Raw(Json.Serialize(Model.sentNotification.RequestId));       
+        var fixer = '@Model.FirstName'
+        var notification = @Html.Raw(Json.Serialize(Model.sentNotification));      
+        var notificationStringify = JSON.stringify(notification);
+
+
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "api/Home/" + requestId + "/" + fixer + "/" + notificationStringify, true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send();
+
+        xhttp.onloadend = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var response = JSON.parse(this.responseText);
+                alert(response);
+
+                document.querySelector('#@Model.BtnClassName').classList.add('disabled')
+                document.querySelector('#BtnClassName').classList.add('disabled')
+                
+            }
+    }
+});
+
+</script>

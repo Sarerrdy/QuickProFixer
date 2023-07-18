@@ -1,0 +1,487 @@
+﻿@page
+@using QuickProFixer.Areas.Identity.Pages.Account
+@model RegisterAsFixerModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+        @*Register as Clientel*@
+        <form id="registerClienteleForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
+            <h2>Create a new Fixer account.</h2>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                <label asp-for="Input.Email"></label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-floating">
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.Password"></label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-floating">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.ConfirmPassword"></label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-floating">
+                <input asp-for="Input.Title" class="form-control" />
+                <label asp-for="Input.Title"></label>
+                <span asp-validation-for="Input.Title" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-floating">
+                <input asp-for="Input.FirstName" class="form-control" />
+                <label asp-for="Input.FirstName"></label>
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-floating">
+                <input asp-for="Input.LastName" class="form-control" />
+                <label asp-for="Input.LastName"></label>
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-floating">
+                <input asp-for="Input.MiddleName" class="form-control" />
+                <label asp-for="Input.MiddleName"></label>
+                <span asp-validation-for="Input.MiddleName" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-floating">
+                <input asp-for="Input.PhoneNumber" class="form-control" />
+                <label asp-for="Input.PhoneNumber"></label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-floating">
+                <input asp-for="Input.NIN" class="form-control" />
+                <label asp-for="Input.NIN"></label>
+                <span asp-validation-for="Input.NIN" class="text-danger"></span>
+            </div>
+            <br />       
+
+
+            <div class="form-floating">
+                <input asp-for="Input.Address" class="form-control" />
+                <label asp-for="Input.Address"></label>
+                <span asp-validation-for="Input.Address" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-floating">
+                <input asp-for="Input.Town" class="form-control" />
+                <label asp-for="Input.Town"></label>
+                <span asp-validation-for="Input.Town" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-floating">
+                <input asp-for="Input.Landmarks" class="form-control" />
+                <label asp-for="Input.Landmarks"></label>
+                <span asp-validation-for="Input.Landmarks" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-group">
+               
+                <div class="form-control">
+                    <select asp-for="CountryId" id="CountryId" class="w-100"
+                            asp-items="Model.SelectCountry">
+                        <option>Select Country</option>
+                    </select>
+                    <span asp-validation-for="CountryId" class="text-danger"></span>
+                </div>
+            </div>
+            @Html.HiddenFor(m => m.CountryName, new{ id = "CountryName"})
+            <br />
+
+            <div class="form-group">
+               
+                <div class="form-control">
+                    <select asp-for="StateId" id="StateId" class="w-100"
+                            asp-items="Model.SelectState">
+                        <option> Select State</option>
+                    </select>
+                    <span asp-validation-for="StateId" class="text-danger"></span>
+                </div>
+            </div>
+            @Html.HiddenFor(m => m.StateName, new{ id = "StateName"})
+            <br />
+
+            <div class="form-group">
+                
+                <div class="form-control">
+                    <select asp-for="LGAId" id="LGAId" class="w-100">
+                        <option value=""> Select Local Gov't Area</option>
+                    </select>
+                    <span asp-validation-for="LGAId" class="text-danger"></span>
+                </div>
+            </div>
+            @Html.HiddenFor(m => m.LGAName, new{ id = "LGAName"})
+            <br />
+
+
+            <div class="form-group">
+                <label asp-for="Input.FileUpload" style="width: 100%;"></label>
+                <img id="imgPicture" style="width:80px;height:80px; object-fit:cover" src="">
+                <input type="file"
+                       accept=".png,.jpg,.jpeg"
+                       asp-for="Input.FileUpload"
+                       class="form-control"
+                       onchange="document.getElementById('imgPicture').src = window.URL.createObjectURL(this.files[0])" />
+                <span asp-validation-for="Input.FileUpload" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-group">
+                <label asp-for="Input.NINFileUpload" style="width: 100%;"></label>
+                <img id="NINFileUpload" style="width:80px;height:80px; object-fit:cover" src="">
+                <input type="file"
+                       accept=".png,.jpg,.jpeg"
+                       asp-for="Input.NINFileUpload"
+                       class="form-control"
+                       onchange="document.getElementById('NINFileUpload').src = window.URL.createObjectURL(this.files[0])" />
+                <span asp-validation-for="Input.NINFileUpload" class="text-danger"></span>
+
+            </div>
+            <br />
+
+
+            @*Fixer ONLY profile entries*@
+
+            <div class="form-floating" id="OrganisationName">
+                <input asp-for="Input.OrganisationName" id="InputOrganisationName" class="form-control" />
+                <label asp-for="Input.OrganisationName"></label>
+                <span asp-validation-for="Input.OrganisationName" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-group bg-light" style="padding:5px">
+                <label asp-for="Input.IsUserCompanyRep" class="badge text-black-50"></label>
+                <br />
+                <label>
+                    <input id="IsUserCompanyRep" asp-for="Input.IsUserCompanyRep" />
+                    Yes
+                </label>
+                <label>
+                    <input id="IsUserCompanyRep_no" type="checkbox" />
+                    No
+                </label>
+            </div>
+            <br />
+
+            <div class="form-group bg-light" style="padding:5px">
+                <label asp-for="Input.IsBusinessAccountManager" class="badge text-black-50"></label>
+                <br />
+                <label>
+                    <input id="IsBusinessAccountManager" asp-for="Input.IsBusinessAccountManager" />
+                    Yes
+                </label>
+                <label>
+                    <input id="IsBusinessAccountManager_no" type="checkbox" />
+                    No
+                </label>
+            </div>
+            <br />
+
+            <div class="form-group bg-light" style="padding:5px">
+                <label asp-for="Input.IsBusinessOwner" class="badge text-black-50"></label>
+                <br />
+                <label>
+                    <input id="IsBusinessOwner" asp-for="Input.IsBusinessOwner" />
+                    Yes
+                </label>
+                <label>
+                    <input id="IsBusinessOwner_no" type="checkbox" />
+                    No
+                </label>
+            </div>
+            <br />
+
+            
+
+            <div class="form-floating">
+                <input asp-for="Input.ShortDescription" class="form-control" />
+                <label asp-for="Input.ShortDescription"></label>
+                <span asp-validation-for="Input.ShortDescription" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-floating">
+                <textarea asp-for="Input.DetailedDescription" id="DetailedDescription" placeholder="Detailed Description about yourself and your work" rows="8" class="w-100"></textarea>
+               @* <label asp-for="Input.DetailedDescription"></label>*@
+                <span asp-validation-for="Input.DetailedDescription" class="text-danger"></span>
+            </div>
+            <br />
+
+          
+
+            <div class="form-floating">
+                <input asp-for="Input.CACNumber" class="form-control" />
+                <label asp-for="Input.CACNumber"></label>
+                <span asp-validation-for="Input.CACNumber" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-floating">
+                <input asp-for="Input.CACExpiryDate" class="form-control" />
+                <label asp-for="Input.CACExpiryDate"></label>
+                <span asp-validation-for="Input.CACExpiryDate" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-group">
+                <label asp-for="Input.CACFileUpload" style="width: 100%;"></label>
+                <img id="CACFileUpload" style="width:80px;height:80px; object-fit:cover" src="">
+                <input type="file"
+                       accept=".png,.jpg,.jpeg"
+                       asp-for="Input.CACFileUpload"
+                       class="form-control"
+                       onchange="document.getElementById('CACFileUpload').src = window.URL.createObjectURL(this.files[0])" />
+                <span asp-validation-for="Input.CACFileUpload" class="text-danger"></span>
+
+            </div>
+            <br />
+
+
+            <div class="form-group">
+                <div class="form-control">
+                    <select id="ServiceTypeId" asp-for="ServiceTypeId" class="w-100"
+                        asp-items="Model.SelectCategories">
+                    <option> Select the main service you offer</option>
+                </select>
+                </div>
+            </div>
+            <br />
+
+            <div class="form-floating">
+                <input asp-for="Input.PrimarySkills" class="form-control" />
+                <label asp-for="Input.PrimarySkills"></label>
+                <span asp-validation-for="Input.PrimarySkills" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-floating">
+                <input asp-for="Input.OtherSkills" class="form-control" />
+                <label asp-for="Input.OtherSkills"></label>
+                <span asp-validation-for="Input.OtherSkills" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-floating">
+                <input asp-for="Input.StartingPrice" class="form-control" />
+                <label asp-for="Input.StartingPrice"></label>
+                <span asp-validation-for="Input.StartingPrice" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-group">
+                <div class="form-control">
+                    <select id="PriceRateTypeId" asp-for="PriceRateTypeId" class="w-100"
+                            asp-items="Model.SelectPriceRate">
+                        <option> Select your price Rate</option>
+                    </select>
+                    <span asp-validation-for="PriceRateTypeId" class="text-danger"></span>
+                </div>
+            </div>
+            <br />           
+           
+           
+            @Html.HiddenFor(m => m.PriceRateName, new{ id = "PriceRateName"})
+            @Html.HiddenFor(m => m.ServiceTypeName, new{ id = "ServiceTypeName"})
+
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register as Fixer</button>
+            <br />
+            <br />
+        </form>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <script>
+
+        //get textValue from selectPrice selectList selectedItem
+        $('#PriceRateTypeId').change(function () {
+
+            let priceRateName = $("#PriceRateTypeId option:selected").text()
+
+            $("#PriceRateName").val(priceRateName)
+                       
+        })
+
+
+
+        //get textValue from selectPrice selectList selectedItem
+        $('#ServiceTypeId').change(function () {
+
+           let  serviceTypeName = $("#ServiceTypeId option:selected").text()
+            $("#ServiceTypeName").val(serviceTypeName)           
+
+        })
+
+
+        //IsUserCompanyRep click Handler  
+
+        $('#IsUserCompanyRep').change(function () {
+
+            if (document.getElementById('IsUserCompanyRep').checked) {
+
+                document.getElementById('IsUserCompanyRep_no').checked = false
+                document.getElementById('IsUserCompanyRep').checked = true
+            }
+            else 
+            {
+                document.getElementById('IsUserCompanyRep_no').checked = true
+                document.getElementById('IsUserCompanyRep').checked = false
+            }
+
+        })
+
+        $('#IsUserCompanyRep_no').change(function () 
+        {
+            if (document.getElementById('IsUserCompanyRep_no').checked) 
+            {
+                document.getElementById('IsUserCompanyRep_no').checked = true
+                document.getElementById('IsUserCompanyRep').checked = false
+            }
+            else
+            {
+                document.getElementById('IsUserCompanyRep_no').checked = false
+                document.getElementById('IsUserCompanyRep').checked = true
+            }
+
+        })
+
+
+        //IsBusinessAccountManager click Handler
+        $('#IsBusinessAccountManager').change(function () 
+        {
+
+            if (document.getElementById('IsBusinessAccountManager').checked) {
+
+                document.getElementById('IsBusinessAccountManager_no').checked = false
+                document.getElementById('IsBusinessAccountManager').checked = true
+            }
+            else {
+                document.getElementById('IsBusinessAccountManager_no').checked = true
+                document.getElementById('IsBusinessAccountManager').checked = false
+            }
+
+        })
+
+        $('#IsBusinessAccountManager_no').change(function () {
+            if (document.getElementById('IsBusinessAccountManager_no').checked) {
+                document.getElementById('IsBusinessAccountManager_no').checked = true
+                document.getElementById('IsBusinessAccountManager').checked = false
+            }
+            else {
+                document.getElementById('IsBusinessAccountManager_no').checked = false
+                document.getElementById('IsBusinessAccountManager').checked = true
+            }
+
+        })
+
+
+        //IsBusinessOwner click Handler
+        $('#IsBusinessOwner').change(function () {
+
+            if (document.getElementById('IsBusinessOwner').checked) {
+
+                document.getElementById('IsBusinessOwner_no').checked = false
+                document.getElementById('IsBusinessOwner').checked = true
+            }
+            else {
+                document.getElementById('IsBusinessOwner_no').checked = true
+                document.getElementById('IsBusinessOwner').checked = false
+            }
+
+        })
+
+        $('#IsBusinessOwner_no').change(function () {
+            if (document.getElementById('IsBusinessOwner_no').checked) {
+                document.getElementById('IsBusinessOwner_no').checked = true
+                document.getElementById('IsBusinessOwner').checked = false
+            }
+            else {
+                document.getElementById('IsBusinessOwner_no').checked = false
+                document.getElementById('IsBusinessOwner').checked = true
+            }
+
+        })
+
+
+
+
+
+        //set textValue from countryselectitem
+        $('#CountryId').change(function () {  
+            
+            let countryName = $("#CountryId option:selected").text()
+
+            $("#CountryName").val(countryName)
+            
+        })       
+                  
+
+        
+        $(function () {
+            $('#StateId').change(function () {
+
+                //set textValue from StateSelect
+                let _stateName = $("#StateId option:selected").text()
+                $("#StateName").val(_stateName)
+
+
+                var stateId = $(this).val();
+                $("#LGAId").empty();
+               
+                $.getJSON(`?handler=LocalGovtAreas&stateId=${stateId}`, (data) => 
+                {
+                    $.each(data, function (i, item) {
+                        //console.log(data[1].lgaId);
+                        //console.log(item);
+                        $("#LGAId").append(`<option value="${item.lgaId}">${item.lgaName}</option>`);
+                    });
+                });
+            });
+            //set textValue from StateSelect
+            let _stateName = $("#StateId option:selected").text()
+            $("#StateName").val(_stateName)
+        });
+
+
+
+        //set textValue from selectLga
+        $('#LGAId').change(function () {
+            let lgaName = $("#LGAId option:selected").text()
+            $("#LGAName").val(lgaName)
+
+        })
+
+    </script>
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

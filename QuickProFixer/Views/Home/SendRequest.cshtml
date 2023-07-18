@@ -1,0 +1,70 @@
+﻿@model QuickProFixer.ViewModels.SendRequestViewModel 
+
+<h3>Send Request Notification to the Fixers below</h3>
+
+
+<h2>@Model.RequestTitle </h2>
+<br/>
+
+
+<div class="container-fluid">
+    <div class="float-end w-100">
+        <a class="btn btn-link bg-primary BtnDisableClass text-white float-end" id="BtnClassName" onclick="SendRequestOnClick()"> send Request to all </a> 
+    </div>
+    <br />
+    <br />
+        @{
+            ///Locate and remove a registered fixer who is raising a request  as client to avoid sending request to self
+            var currClient = Model.FixerMiniTemplateViews.FirstOrDefault(p => p.FixerId == Model.ClientId);
+            if(currClient != null)
+            Model.FixerMiniTemplateViews.Remove(currClient);
+
+            @foreach (var fixer in @Model.FixerMiniTemplateViews)
+            {               
+                @await Html.PartialAsync("_FixerThumbPartial", fixer)
+
+                <hr />
+            }
+        }
+          
+
+    <form method="post">
+        <div class="col float-end">
+            <button class="btn btn-primary" asp-action="Index" asp-controller="ClienteleSpace" asp-route-clienteleId="@Model.ClientId"> Done! </button>
+        </div>
+        <br />
+        <br />
+    </form>
+</div>
+
+<script>
+    function SendRequestOnClick(){
+
+            var BtnClassesArray =  @Html.Raw(Json.Serialize(Model.BtnClasses));           
+            var sentNotifications = @Html.Raw(Json.Serialize(Model.SentNotificationList));
+            var requestId = @Html.Raw(Json.Serialize(Model.RequestId));          
+
+            var sentNotificationsStringify = JSON.stringify(sentNotifications);
+            
+         
+
+            var xhttp = new XMLHttpRequest();
+        var uri = "api/Home/" + requestId + "/" + sentNotificationsStringify;
+            xhttp.open("POST",uri, true);
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            xhttp.send();
+
+            xhttp.onloadend = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var response = JSON.parse(this.responseText);
+                    alert(response)
+
+                    var ele = document.querySelectorAll('.BtnDisableClass')//.classList.add('disabled');
+                    for (var i = 0, len = ele.length; i < len; i++){
+                        ele[i].classList.add('disabled');
+                    }                    
+                }
+            }
+
+    }
+</script>

@@ -1,0 +1,861 @@
+﻿@model HomeIndexVm
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<br/>
+<br/>
+<h1 class="text-center"> Welcome to QuickProFix </h1>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+
+
+<form method="post" asp-route-returnUrl="@Model.ReturnUrl" enctype="multipart/form-data">
+
+
+@* Tab Headers*@ 
+<ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist" >
+  <li class="nav-item" role="presentation">
+    <a class="nav-link active" href="#Services" id="Services-tab" data-bs-toggle="tab" data-bs-target="#Services" type="button" role="tab" aria-controls="Services" aria-selected="true">Services</a>
+  </li>
+
+  <li class="nav-item" role="presentation">
+    <a class="nav-link disabled" id="Date-tab" href="#Date" data-bs-toggle="tab" data-bs-target="#Date" type="button" role="tab" aria-controls="Date" aria-selected="false">Date</a>
+  </li>
+
+  <li class="nav-item" role="presentation">
+    <a class="nav-link disabled" href="#DetailedDescription" id="DetailedDescription-tab" data-bs-toggle="tab" data-bs-target="#DetailedDescription" type="button" role="tab" aria-controls="DetailedDescription" aria-selected="false">Description</a>
+  </li>
+
+  <li class="nav-item" role="presentation">
+    <a class="nav-link disabled" href="#Attachments" id="Attachments-tab" data-bs-toggle="tab" data-bs-target="#Attachments" type="button" role="tab" aria-controls="Attachments" aria-selected="false">Attachments</a>
+  </li>
+
+    <li class="nav-item" role="presentation">
+    <a class="nav-link disabled" href="#Location" id="Location-tab" data-bs-toggle="tab" data-bs-target="#Location" type="button" role="tab" aria-controls="Location" aria-selected="false">Location</a>
+  </li>
+
+      <li class="nav-item" role="presentation">
+    <a class="nav-link disabled" href="#Preview" id="Preview-tab" data-bs-toggle="tab" data-bs-target="#Preview" type="button" role="tab" aria-controls="Preview" aria-selected="false">Preview</a>
+  </li>
+</ul>
+
+<br/>
+<br/>
+
+
+<div class="tab-content justify-content-center">
+
+@* Services Tab content*@ 
+  <div class="tab-pane active" id="Services" role="tabpanel" aria-labelledby="Services-tab">
+   <div class="row">
+      <div class="col">
+         
+      </div>
+      <div class="col-8 justify-content-center">
+         
+
+          @* <h3 class="text-danger text-sm-start">@Model.Feedback</h3>*@
+           <br/>
+
+           <h3 class="text-center">What kind of Fix do you want?</h3>
+
+           <br/>
+
+            <div class="form-group">
+                <div class="form-control">
+                            <select asp-for="Request.ServiceTypeId" id="ServiceTypeId" class="w-100"
+                        asp-items="Model.SelectCategories">
+                         <option>Search for services </option>
+                </select>                 
+                </div>
+                        <span asp-validation-for="Request.ServiceType" class="text-danger"></span>
+            </div>
+      <br/>
+
+                    @Html.HiddenFor(m => m.Request.ServiceType, new{ id = "ServiceType"})
+                   
+
+            <a class="btn btn-link" onclick="gotoDateBtnClick()"> Next </a>
+        </div>
+
+      <div class="col">
+
+      </div>
+    </div>
+  </div>
+
+
+
+@* Date Tab content*@ 
+
+  <div class="tab-pane" id="Date" role="tabpanel" aria-labelledby="Date-tab">
+    
+    <div class="row">
+      <div class="col">
+         
+      </div>
+      <div class="col-8 justify-content-center">
+
+           <h3 class="text-center">When do you want the @Model.Request.ServiceType Fix to start?</h3>
+           <br/>
+
+        <div class="form-group">
+            <input asp-for="PreferredStartDate" id="PreferredStartDate" class="form-control" />
+            <span asp-validation-for="PreferredStartDate" class="text-danger"></span>
+        </div>
+      <br/>
+
+
+      <div class="col float-start">
+       <div class="row">
+              <div class="col float-end">
+                   <a class="btn btn-link" onclick="gotoServicesBtnClick()"> Previous</a>
+              </div>
+              <div class="col float-start">
+                    <a class="btn btn-link" onclick="gotoDescriptionBtnClick()">Next</a>
+              </div>
+          </div>
+      </div>
+
+
+        </div>
+
+      <div class="col">
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+@* Description Tab content*@ 
+
+  <div class="tab-pane" id="DetailedDescription" role="tabpanel" aria-labelledby="DetailedDescription-tab">
+      
+      <div class="row">
+      <div class="col">         
+      </div>
+
+      <div class="col-8 justify-content-center">
+
+         <h3 class="text-center">Please Describe in details the @Model.Request.ServiceType Task you want to Fix!!</h3>
+           <br/>
+
+    <div class="form-floating">
+        <input asp-for="Request.Title" id="Title" class="form-control" />
+            <label>Enter request Title</label>
+        <span asp-validation-for="Request.Title" class="text-danger"></span>
+        </div>
+      <br/>
+
+        <div class="form-group"> 
+                <textarea asp-for="Request.Description" id="Description" rows="10" placeholder="Describe the task details here" class="form-control"></textarea>                
+                <span asp-validation-for="Request.Description" class="text-danger"></span>
+        </div>
+      <br/>
+
+      <div class="col float-start">
+         <div class="row">
+              <div class="col float-end">
+                   <a class="btn btn-link" onclick="gotoDateBtnClick()">Previous</a>
+              </div>
+              <div class="col float-start">
+                  <a class="btn btn-link" onclick="gotoAttachmentsBtnClick()">Next</a>                  
+              </div>
+          </div>
+      </div>
+
+          
+        </div>
+
+      <div class="col">
+
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+@* Attachments Tab content*@ 
+
+  <div class="tab-pane" id="Attachments" role="tabpanel" aria-labelledby="Attachments-tab">
+        
+     <div class="row">
+      <div class="col">         
+      </div>
+
+      <div class="col-8 justify-content-center">
+         
+
+           
+           <h3 class="text-center">Please attach Images, Voice Note, short video Clips (30 secs max) or .pdf files to aid in understanding the Task you want to Fix!!</h3>
+
+           <br/>
+           <div class="col form-group">
+               <div class="col">
+                    <label>1st Image</label>
+               </div>
+               
+               <div class="col">
+                            <input asp-for="ImgUrl_1" type="file" class="form-control" />
+               </div>
+                        <span asp-validation-for="ImgUrl_1" class="text-danger"></span>
+            </div>
+
+              <br/>
+
+            <div class="form-group">
+                <div class="col">
+                    <label>2nd Image</label>
+                </div>
+                <div class="col">
+                            <input asp-for="ImgUrl_2" type="file" class="form-control" />
+                 </div>
+                        <span asp-validation-for="ImgUrl_2" class="text-danger"></span>
+            </div>
+
+              <br/>
+
+            <div class="form-group">
+            <div class="col">
+                    <label>3rd Image</label>
+            </div>
+            <div class="col">
+                            <input asp-for="ImgUrl_3" type="file" class="form-control" />
+             </div>
+                        <span asp-validation-for="ImgUrl_3" class="text-danger"></span>
+            </div>
+
+              <br/>
+
+           <div class="form-group">
+            <div class="col">
+                    <label>Video Url</label>
+            </div>
+            <div class="col">
+                            <input asp-for="VideoUrl" type="file" class="form-control" />
+             </div>
+                        <span asp-validation-for="VideoUrl" class="text-danger"></span>
+            </div>
+
+              <br/>
+
+             <div class="form-group">
+            <div class="col">
+                    <label>Audio Url</label>
+            </div>
+            <div class="col">
+                            <input asp-for="AudioUrl" type="file" class="form-control" />
+             </div>
+                        <span asp-validation-for="AudioUrl" class="text-danger"></span>
+            </div>
+
+              <br/>
+
+              <div class="form-group">
+            <div class="col">
+                    <label>Pdf Url</label>
+            </div>
+            <div class="col">
+                            <input asp-for="PdfUrl" type="file" class="form-control" />
+             </div>
+                        <span asp-validation-for="PdfUrl" class="text-danger"></span>
+            </div>
+         <br/>
+
+
+        <div class="col float-start">
+          <div class="row">
+              <div class="col float-end">
+                 <a class="btn btn-link" onclick="gotoDescriptionBtnClick()">Previous</a>                    
+              </div>
+              <div class="col float-start">
+                  <a class="btn btn-link" onclick="gotoLocationBtnClick()">Next</a>                  
+              </div>
+          </div>
+        </div>
+         
+    </div>
+
+
+      <div class="col">
+
+      </div>
+    </div>
+
+  
+  </div>
+
+@* Location Tab content*@ 
+
+  <div class="tab-pane" id="Location" role="tabpanel" aria-labelledby="Location-tab">
+      
+      <div class="row">
+      <div class="col">
+         
+      </div>
+      <div class="col-8 justify-content-center">
+
+          <h3 class="text-center">Where is the Location for @Model.Request.ServiceType Fix?</h3>
+         <br/>
+
+           <div class="row">
+               <div class="col">
+                   <input id="AddressRadio" @*onclick="ActivateRatingCommentBtn()"*@ type="radio" asp-for="LocationPicker" value="1" />
+                   <span>Use my current location</span>
+               </div>
+
+                <div class="col">
+                   <input id="AddressRadio" @*onclick="ActivateRatingCommentBtn()"*@ type="radio" asp-for="LocationPicker" value="2" />
+                     <span>Use my contact address</span>
+               </div>
+
+
+                <div class="col">
+                   <input id="AddressRadio" @*onclick="ActivateRatingCommentBtn()"*@ type="radio" asp-for="LocationPicker" value="3" />
+                     <span>Pick a location from the map</span>
+               </div>
+           </div>
+           <br/>
+
+       <div class="form-group">
+            <div class="col">
+                <label>Country</label>
+            </div>
+               
+       <div class="col">
+           <select asp-for="Request.CountryId" id="CountryId" class="w-100"
+                  asp-items="Model.SelectCountries">
+              <option>--select a country--</option>
+             </select>
+            </div>
+            <span asp-validation-for="Request.CountryName" class="text-danger"></span>
+        </div>
+            @Html.HiddenFor(m => m.Request.CountryName, new{ id = "CountryName"})
+      <br/>
+
+
+
+          <div class="form-group">
+               <div class="col">
+                    <label>State</label>
+               </div>
+               
+               <div class="col">
+
+            <select asp-for="Request.StateId" id="StateId" class="w-100"
+                  asp-items="Model.SelectStates">
+                    <option>--select a state--'</option>
+            </select>
+           </div>
+              <span asp-validation-for="Request.StateName" class="text-danger"></span>
+            </div>
+              @Html.HiddenFor(m => m.Request.StateName, new{ id = "StateName"})
+      <br/>
+
+
+        <div class="form-group">
+            <div class="col">
+                <label>Local Gov Area</label>
+            </div>               
+            <div class="col">
+            <select asp-for="Request.LGAId" id="LGAId" class="w-100"
+                    asp-items="Model.SelectLGAs">
+                <option>--select lga--'</option>
+            </select>
+            </div>
+          <span asp-validation-for="Request.LGAName" class="text-danger"></span>
+        </div>
+          @Html.HiddenFor(m => m.Request.LGAName, new{ id = "LGAName"})
+      <br/>
+
+        <div class="form-floating">
+                <input asp-for="Request.Town" id="Town" class="form-control w-100" />
+                <label>Town</label>                        
+            <span asp-validation-for="Request.Town" class="text-danger"></span>
+        </div>
+        <br />
+
+        <div class="form-floating">   
+            <input asp-for="Request.Address" id="Address" class="form-control w-100" />
+                    <label>Address</label>              
+            <span asp-validation-for="Request.Address" class="text-danger"></span>
+         </div>    
+      <br/>
+
+        <div class="form-floating">               
+            <input asp-for="Request.Landmarks" id="Landmarks" class="form-control w-100" />
+            <label>Nearby Landmark(s)</label>              
+            <span asp-validation-for="Request.Landmarks" class="text-danger"></span>
+          </div>    
+      <br/>
+
+
+    <div class="col float-start">
+         <div class="row">
+              <div class="col float-end">
+                   <a class="btn btn-link float-end" onclick="gotoAttachmentsBtnClick()">Previous</a>
+              </div>
+              <div class="col float-start">                
+                   <a class="btn btn-link float-start" onclick="gotoPreviewBtnClick()">Next</a>
+              </div>
+          </div>
+      </div>
+
+          
+        </div>
+
+      <div class="col">
+      </div>
+    </div>
+
+
+  </div>
+
+
+@* Preview Tab content*@ 
+
+  <div class="tab-pane" id="Preview" role="tabpanel" aria-labelledby="Previews-tab">
+      
+    <div class="row">
+      <div class="col">
+         
+      </div>
+      <div class="col-8 justify-content-center">
+         
+
+           
+           <h3 class="text-center">Please preview your Fix Request</h3>
+
+           <br/>
+
+
+
+           <div class="row">
+
+               <div class="row">              
+                   <div class="col-4">
+                       <div class="float-end">Title of Request:</div>                 
+                   </div>
+
+                    <div class="col-8">
+                         <div id="prevTitle">@Model.Request.Title</div>                   
+                   </div>
+               </div>
+
+
+               <div class="row">              
+                   <div class="col-4">
+                       <div class="float-end">Type of Request:</div>                 
+                   </div>
+
+                    <div class="col-8">
+                                <div id="prevCategoryId">@Model.Request.ServiceType</div>
+                            </div>
+               </div>
+
+
+                <div class="row">              
+                   <div class="col-4">
+                       <div class="float-end">Desired start Date:</div>                 
+                   </div>
+
+                    <div class="col-8">
+                                <div id="prevPreferredStartDate">@Model.PreferredStartDate</div>
+                            </div>
+               </div>
+
+
+                 <div class="row">              
+                   <div class="col-4">
+                       <div class="float-end">Detailed description of Request:</div>                 
+                   </div>
+
+                    <div class="col-8">
+                                <div id="prevDescription">@Model.Request.Description </div>
+                            </div>
+               </div>
+
+
+
+                <div class="row">              
+                   <div class="col-4">
+                       <div class="float-end">Attached Resources:</div>                 
+                   </div>
+
+                    <div class="col-8">
+                                <div id="prevImgUrl_1">@Model.Request.ImgUrl_1</div>
+                                <div id="prevImgUrl_2">@Model.Request.ImgUrl_2</div>
+                                <div id="prevImgUrl_3">@Model.Request.ImgUrl_3</div>
+                                <div id="prevAudioUrl">@Model.Request.AudioUrl</div>
+                                <div id="prevVideoUrl">@Model.Request.VideoUrl</div>
+                                <div id="prevPdfUrl">@Model.Request.PdfUrl</div>
+                            </div>
+               </div>
+
+
+                <div class="row">              
+                   <div class="col-4">
+                       <div class="float-end">Location:</div>                 
+                   </div>
+
+                    <div class="col-8">
+                                <div id="prevAddress">@Model.Request.Address</div>
+                                <div id="prevTown">@Model.Request.Town</div>
+                                <div id="prevLandMark">@Model.Request.Landmarks</div>
+                                <div id="prevLGAName">@Model.Request.LGAName</div>
+                                <div id="prevStateName">@Model.Request.StateName</div>
+                                <div id="prevCountryName">@Model.Request.CountryName</div>
+                            </div>
+               </div>
+
+
+
+
+
+           </div>
+      <br/>
+
+         <div class="row">
+              <div class="col">
+                   <a class="btn btn-link" onclick="gotoLocationBtnClick()">Previous</a>
+              </div>
+              <div class="col">
+                  <button class="btn btn-primary float-end" type="submit" asp-controller="Home" asp-action="Index">Find Fixer</button>                  
+              </div>
+          </div>
+
+          
+        </div>
+
+      <div class="col">
+
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        var isReloaded = @Html.Raw(Json.Serialize(Model.IsPageReloading))
+            var feedback = @Html.Raw(Json.Serialize(Model.Feedback))
+            $(document).ready(function (e) {
+                if (isReloaded == true) {
+                    alert(feedback)
+                }
+            })
+
+        //set textValue from selectServiceType
+        $('#ServiceTypeId').change(function () {
+            let serviceType = $("#ServiceTypeId option:selected").text()
+            $("#ServiceType").val(serviceType)
+
+
+        })
+
+
+        $('#CountryId').change(function () {
+            var selectedCountry = $("#CountryId").val();
+            var selectState = $('#StateId');
+
+            //set textValue from countryselectitem
+            let countryName = $("#CountryId option:selected").text()
+            $("#CountryName").val(countryName)
+
+            selectState.empty();
+            if (selectedCountry != null && selectedCountry != '--select a country--') {
+                $.getJSON('@Url.Action("GetStates","LocApi")',
+                    { selectedCountryId: selectedCountry },
+                    function (states) {
+                        if (states != null && !jQuery.isEmptyObject(states)) {
+                            selectState.append($('<option/>', { value: null, text: "--select a state--" }));
+
+                            $.each(states, function (index, states) {
+                                selectState.append($('<option/>', { value: states.value, text: states.text }));
+                            });
+                        };
+                    });
+            }
+        });
+
+
+        $('#StateId').change(function () {
+            var selectedState = $("#StateId").val();
+            var selectedLga = $('#LGAId');
+
+            //set textValue from StateSelect
+            let stateName = $("#StateId option:selected").text()
+            $("#StateName").val(stateName)
+
+            selectedLga.empty();
+            if (selectedState != null && selectedState != '' && selectedState != '--select a state--') {
+                $.getJSON('@Url.Action("GetLgas","LocApi")', { selectedStateId: selectedState },
+                    function (lgas) {
+                        if (lgas != null && !jQuery.isEmptyObject(lgas)) {
+                            selectedLga.append($('<option/>', {
+                                value: null,
+                                text: "--select a Lga--"
+                            }));
+                            $.each(lgas, function (index, lgas) {
+                                selectedLga.append($('<option/>', {
+                                    value: lgas.value,
+                                    text: lgas.text
+                                }));
+                            });
+                        };
+                    });
+            }
+
+        });
+
+        //set textValue from selectLga
+        $('#LGAId').change(function () {
+
+            let lgaName = $("#LGAId option:selected").text()
+            $("#LGAName").val(lgaName)
+        })
+
+
+        $('#Services-tab').click(function () {
+            var nextTab = document.querySelector('#myTab li:nth-child(2) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(3) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(4) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(5) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(6) a').classList
+            nextTab.add('disabled')
+
+
+        });
+
+        $('#Date-tab').click(function () {
+            var PrevTab = document.querySelector('#myTab li:nth-child(2) a').classList
+            PrevTab.remove('disabled')
+            var nextTab = document.querySelector('#myTab li:nth-child(3) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(4) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(5) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(6) a').classList
+            nextTab.add('disabled')
+        });
+
+
+        $('#Description-tab').click(function () {
+            var PrevTab = document.querySelector('#myTab li:nth-child(2) a').classList
+            PrevTab.remove('disabled')
+            var PrevTab = document.querySelector('#myTab li:nth-child(3) a').classList
+            PrevTab.remove('disabled')
+            var nextTab = document.querySelector('#myTab li:nth-child(4) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(5) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(6) a').classList
+            nextTab.add('disabled')
+
+        });
+
+        $('#Attachments-tab').click(function () {
+            var prevTabs = document.querySelector('#myTab li:nth-child(2) a').classList
+            prevTabs.remove('disabled')
+            prevTabs = document.querySelector('#myTab li:nth-child(3) a').classList
+            prevTabs.remove('disabled')
+            prevTabs = document.querySelector('#myTab li:nth-child(4) a').classList
+            prevTabs.remove('disabled')
+            var nextTab = document.querySelector('#myTab li:nth-child(5) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(6) a').classList
+            nextTab.add('disabled')
+
+        });
+
+        $('#Location-tab').click(function () {
+            var prevTabs = document.querySelector('#myTab li:nth-child(2) a').classList
+            prevTabs.remove('disabled')
+            prevTabs = document.querySelector('#myTab li:nth-child(3) a').classList
+            prevTabs.remove('disabled')
+            prevTabs = document.querySelector('#myTab li:nth-child(4) a').classList
+            prevTabs.remove('disabled')
+            prevTabs = document.querySelector('#myTab li:nth-child(5) a').classList
+            prevTabs.remove('disabled')
+            var nextTab = document.querySelector('#myTab li:nth-child(6) a').classList
+            nextTab.add('disabled')
+
+        });
+
+
+
+        function gotoServicesBtnClick() {
+
+            var nextTab = document.querySelector('#myTab li:nth-child(2) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(3) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(4) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(5) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(6) a').classList
+            nextTab.add('disabled')
+
+            var ServicesTab = document.querySelector('#myTab li:nth-child(1) a')
+            var Tab = new bootstrap.Tab(ServicesTab)
+
+            Tab.show()
+
+        }
+
+        function gotoDateBtnClick() {
+
+            var PrevTab = document.querySelector('#myTab li:nth-child(2) a').classList
+            PrevTab.remove('disabled')
+            var nextTab = document.querySelector('#myTab li:nth-child(3) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(4) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(5) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(6) a').classList
+            nextTab.add('disabled')
+
+            var ServicesTab = document.querySelector('#myTab li:nth-child(2) a')
+            var Tab = new bootstrap.Tab(ServicesTab)
+
+            Tab.show()
+        }
+
+        function gotoDescriptionBtnClick() {
+
+            var PrevTab = document.querySelector('#myTab li:nth-child(2) a').classList
+            PrevTab.remove('disabled')
+            var PrevTab = document.querySelector('#myTab li:nth-child(3) a').classList
+            PrevTab.remove('disabled')
+            var nextTab = document.querySelector('#myTab li:nth-child(4) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(5) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(6) a').classList
+            nextTab.add('disabled')
+
+            var ServicesTab = document.querySelector('#myTab li:nth-child(3) a')
+            var Tab = new bootstrap.Tab(ServicesTab)
+
+            Tab.show()
+
+        }
+
+        function gotoAttachmentsBtnClick() {
+
+            var prevTabs = document.querySelector('#myTab li:nth-child(2) a').classList
+            prevTabs.remove('disabled')
+            prevTabs = document.querySelector('#myTab li:nth-child(3) a').classList
+            prevTabs.remove('disabled')
+            prevTabs = document.querySelector('#myTab li:nth-child(4) a').classList
+            prevTabs.remove('disabled')
+            var nextTab = document.querySelector('#myTab li:nth-child(5) a').classList
+            nextTab.add('disabled')
+            nextTab = document.querySelector('#myTab li:nth-child(6) a').classList
+            nextTab.add('disabled')
+
+            var ServicesTab = document.querySelector('#myTab li:nth-child(4) a')
+            var Tab = new bootstrap.Tab(ServicesTab)
+
+            Tab.show()
+        }
+
+
+        function gotoLocationBtnClick() {
+
+            var prevTabs = document.querySelector('#myTab li:nth-child(2) a').classList
+            prevTabs.remove('disabled')
+            prevTabs = document.querySelector('#myTab li:nth-child(3) a').classList
+            prevTabs.remove('disabled')
+            prevTabs = document.querySelector('#myTab li:nth-child(4) a').classList
+            prevTabs.remove('disabled')
+            prevTabs = document.querySelector('#myTab li:nth-child(5) a').classList
+            prevTabs.remove('disabled')
+            var nextTab = document.querySelector('#myTab li:nth-child(6) a').classList
+            nextTab.add('disabled')
+
+            var ServicesTab = document.querySelector('#myTab li:nth-child(5) a')
+            var Tab = new bootstrap.Tab(ServicesTab)
+
+            Tab.show()
+        }
+
+
+        function gotoPreviewBtnClick() {
+
+            var prevTabs = document.querySelector('#myTab li:nth-child(2) a').classList
+            prevTabs.remove('disabled')
+            prevTabs = document.querySelector('#myTab li:nth-child(3) a').classList
+            prevTabs.remove('disabled')
+            prevTabs = document.querySelector('#myTab li:nth-child(4) a').classList
+            prevTabs.remove('disabled')
+            prevTabs = document.querySelector('#myTab li:nth-child(5) a').classList
+            prevTabs.remove('disabled')
+            var nextTab = document.querySelector('#myTab li:nth-child(6) a').classList
+            nextTab.remove('disabled')
+
+
+
+
+
+
+            document.querySelector('#prevTitle').innerHTML = document.querySelector('#Title').value
+            document.querySelector('#prevCategoryId').innerHTML = $("#CategoryId option:selected").text()
+            document.querySelector('#prevDescription').innerHTML = document.getElementById("Description").value
+            document.querySelector('#prevPreferredStartDate').innerHTML = document.querySelector('#PreferredStartDate').value
+
+            document.querySelector('#prevImgUrl_1').innerHTML = document.querySelector('#ImgUrl_1').value
+            document.querySelector('#prevImgUrl_2').innerHTML = document.querySelector('#ImgUrl_2').value
+            document.querySelector('#prevImgUrl_3').innerHTML = document.querySelector('#ImgUrl_3').value
+            document.querySelector('#prevAudioUrl').innerHTML = document.querySelector('#AudioUrl').value
+            document.querySelector('#prevVideoUrl').innerHTML = document.querySelector('#VideoUrl').value
+            document.querySelector('#prevPdfUrl').innerHTML = document.querySelector('#PdfUrl').value
+
+
+            document.querySelector('#prevAddress').innerHTML = document.querySelector('#Address').value
+            document.querySelector('#prevTown').innerHTML = document.querySelector('#Town').value
+            document.querySelector('#prevLandMark').innerHTML = document.querySelector('#Landmarks').value
+            document.querySelector('#prevLGAName').innerHTML = $("#LGAId option:selected").text()
+            document.querySelector('#prevStateName').innerHTML = $("#StateId option:selected").text()
+            document.querySelector('#prevCountryName').innerHTML = $("#CountryId option:selected").text()
+
+
+
+
+
+            var ServicesTab = document.querySelector('#myTab li:nth-child(6) a')
+            var Tab = new bootstrap.Tab(ServicesTab)
+
+            Tab.show()
+        }
+
+    </script>   
+}
+
+
+

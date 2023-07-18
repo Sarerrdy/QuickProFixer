@@ -1,0 +1,33 @@
+﻿@model QuickProFixer.ViewModels.FSRequestViewModel
+
+
+
+<h3 class="text-center">Welcome @Model.FixerName to your Fixer Space</h3>
+<br />
+
+<h2> Rejected Quotes </h2>
+
+<hr />
+<br />
+
+
+<div class="container-fluid">
+    @{
+        @foreach (var request in @Model.RequestMiniTemplateViewModels)
+        {
+
+            <div class="col bg-light bg-opacity-50">
+                @await Html.PartialAsync("_RequestThumbPartial", request)
+
+                <div class="col float-end">
+                    <a class="btn btn-link" asp-controller="FixerSpace" asp-action="QuotePreview" asp-route-QuoteId="@request.QuoteId"> View Details</a>
+                </div>
+                
+
+            </div>
+            <br />
+            <hr />
+        }
+    }
+
+</div>

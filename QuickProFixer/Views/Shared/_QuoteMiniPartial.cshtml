@@ -1,0 +1,42 @@
+﻿@model QuickProFixer.ViewModels.QuoteMiniTemplateViewModel
+
+<div class="row">
+    
+    <div class="col">
+     
+            <div class="col badge text-black"><h4>@Model.Title</h4></div>
+            <div class="col card-body">
+                <span>@Model.ShortDescription   </span>
+            </div>
+            <br />
+          <div class="row">
+            <div class="col">
+                <div class="col card-text">
+                   <span class="badge text-black">Name of Fixer:</span> @Model.FixerName
+                </div>
+
+                <div class="col card-text">
+                   <span class="badge text-black">Estimated Duration:</span>@Model.EstimatedFixDuration day(s)
+                </div>
+            </div>
+
+
+            <div class="col">
+                <div class="col card-text">
+                   <span class="badge text-black">Overall Estimated Cost:</span>@Model.EstimatedOverallCost
+                </div>
+            
+                <div class="col card-text">
+                   <span class="badge text-black">Date submitted:</span> @Model.DateSubmitted.ToShortDateString()
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="col card-text">
+                   <span class="badge text-black">Possible start Date:</span>@Model.EstimatedStartDate.ToShortDateString() 
+                </div>
+            </div>
+            
+          </div>
+    </div>
+</div>

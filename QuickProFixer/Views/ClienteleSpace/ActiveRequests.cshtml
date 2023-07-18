@@ -1,0 +1,67 @@
+﻿@using static QuickProFixer.ViewModels.FSRequestViewModel;
+@model QuickProFixer.ViewModels.CSActiveRequestViewModel
+
+<h3 class="text-center">welcome @Model.ClienteleName to your Clientele Space</h3>
+
+<h2> Active Requests</h2>
+
+<hr />
+<br />
+
+
+<div class="container-fluid">
+
+    @foreach (var request in @Model.RequestMiniTemplateViewModels)
+    {
+        Model.Flags = ResponseCode.ClieteleMarksAsCompleted;
+
+        <div id="@request.SentNotificationId" class="col bg-light bg-opacity-50">
+            @await Html.PartialAsync("_RequestThumbPartial", request)
+
+            <div class="col float-end">
+                <a class="btn btn-link" asp-controller="ClienteleSpace" asp-action="ActiveRequestDetails" asp-route-RequestId="@request.RequestId"> View Details </a>
+            </div>
+
+            <div class="col float-end">
+                <a class="btn btn-link" id="MarkAsCompletedBtn" onclick="MarkAsCompletedOnClick(@request.SentNotificationId, @request.FixerId, @request.RequestId, @request.QuoteId)"> Mark as completed</a>
+            </div>
+
+            <br />
+            <hr />
+        </div>       
+
+    }
+</div>
+
+<script>
+
+
+
+    function MarkAsCompletedOnClick(SentNotificationId, FixerId, RequestId, QuoteId) {
+
+        var flag = @Html.Raw(Json.Serialize(Model.Flags));
+        var msg = "You have successfully marked this Request as completed...Please do note that the Fixer MUST also mark this Request as completed"
+
+
+
+        var flagsStringify = JSON.stringify(flag);
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/api/ClienteleSpace/" + SentNotificationId + "/" + FixerId + "/" + flagsStringify + "/" + msg + "/" + RequestId + "/" + QuoteId, true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send();
+
+        xhttp.onloadend = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var response = JSON.parse(this.responseText);
+                alert(response);
+
+                var div = document.getElementById(SentNotificationId);
+                div.parentNode.removeChild(div)
+
+                // $(this).classList.add('disabled')
+                // document.querySelector('#RejectRequestBtn').classList.add('disabled')
+            }
+        }
+    }
+</script>

@@ -1,0 +1,36 @@
+﻿@model QuickProFixer.ViewModels.CSActiveRequestViewModel
+
+
+
+<h3 class="text-center">Welcome @Model.ClienteleName to your Clientele Space</h3>
+<br />
+
+<h2> Completed Fixes History </h2>
+
+<hr />
+<br />
+
+
+<div class="container-fluid">
+    @{
+        @foreach (var request in @Model.RequestMiniTemplateViewModels)
+        {
+
+            <div class="col bg-light bg-opacity-50">
+                @await Html.PartialAsync("_RequestThumbPartial", request)
+
+
+
+                <div class="col float-end">
+                    <a class="btn btn-link" asp-controller="ClienteleSpace" asp-action="ActiveRequestDetails" asp-route-RequestId="@request.RequestId"> View Details </a>
+                </div>
+
+
+                <br />
+                <hr />
+            </div>
+
+        }
+    }
+
+</div>
