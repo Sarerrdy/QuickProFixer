@@ -12,7 +12,7 @@
           <div class="row">
             <div class="col">
                 <div class="col card-text">
-                   <span class="badge text-black">Name of Fixer:</span> @Model.FixerName
+                    <span class="badge text-black">Name of Fixer:</span> <a asp-action="FixerDetails" asp-controller="FixerSpace" asp-route-FixerId="@Model.FixerId">@Model.FixerName</a>
                 </div>
 
                 <div class="col card-text">

@@ -41,6 +41,7 @@ namespace QuickProFixer.Models.Context
         public DbSet<Material> Materials { get; set; }
         public DbSet<PriceRateType>  priceRateTypes { get; set; }
         public DbSet<NotificationResponseStatus> NotificationResponseStatuses { get; set; }
+        public DbSet<Message> Messages { get; set; }
       //  public DbSet<NotificationReciever> NotificationRecievers { get; set; }
     }
 }

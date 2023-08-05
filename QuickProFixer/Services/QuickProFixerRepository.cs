@@ -195,6 +195,27 @@ namespace QuickProFixer.Services
                 .ToList();
         }
 
+        public FSFixerDetailsViewModel GetUserDatails (int userId)
+        {
+            var user = _ctx.Users
+               .FirstOrDefault(p => p.Id == userId);
+               //.Include(p => p.Profile)
+               //.Include(p => p.Responses)
+               //.Include(p => p.StarRating)
+               //.Include(p => p.Contact)
+               //.Include(p => p.Reviews)
+               //.ToList();
+
+            FSFixerDetailsViewModel vm = new FSFixerDetailsViewModel();
+
+            vm.FixerUser = user;
+            vm.Contact = user.Contact;
+            vm.AllReviews = user.Reviews;         
+
+
+            return vm;
+        }
+
         public string UpdateRequest(Request request)
         {
             try
@@ -698,6 +719,7 @@ namespace QuickProFixer.Services
 
 
             CreateQuoteViewModel CreateAcceptedQuoteVM = new CreateQuoteViewModel();
+            CreateAcceptedQuoteVM.FixerId = acceptedFixer.Id;
             CreateAcceptedQuoteVM.FixerFirstNames = acceptedFixer.FirstName;
             CreateAcceptedQuoteVM.FixerLastName = acceptedFixer.LastName;
             CreateAcceptedQuoteVM.FixerAddress = acceptedFixer.Contact.Address;
@@ -1050,11 +1072,6 @@ namespace QuickProFixer.Services
 
 
 
-
-
-
-
-
         //list of completed fixes
         public FSRequestViewModel GetFSFixesCompletedFixesByFixerId(int fixerId)
         {            
@@ -1224,5 +1241,113 @@ namespace QuickProFixer.Services
                 return "Update Failed..with the following errors" + " " + ex;
             }
         }
+
+
+
+
+        /////Fetch star Ratings
+        public IEnumerable<Rating> GetStarRatingFromDb(int userId)
+        {
+
+            try
+            {
+                return _ctx.Ratings.Where(s => s.UserId == userId).ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        
+        ///Add starRating to both Expert and StarRating Tables
+        public void AddStarRatingToDB(Rating starRating, int one, int two, int three, int four, int five)
+        {
+            ///add new rating to total of existing rating
+            try
+            {
+                one = starRating.One + one;
+                two = starRating.Two + two;
+                three = starRating.Three + three;
+                four = starRating.Four + four;
+                five = starRating.Five + five;
+
+
+                var expert = _ctx.Users.FirstOrDefault(s => s.Id == starRating.UserId);
+
+                double productSum = (one * 1) + (two * 2) + (three * 3) + (four * 4) + (five * 5);
+                double Sum = (one + two + three + four + five);
+
+                double ratingResult = productSum / Sum;
+
+                expert.RatingScore = Math.Round(ratingResult, 1);
+                expert.TotalRatingCount = expert.TotalRatingCount += 1;
+
+                _ctx.Ratings.Add(starRating);
+                // _ctx.SaveChanges();
+
+                _ctx.Users.Update(expert);
+                _ctx.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        //Check if the user have been reviewed by reviewer before 
+        public bool IsExpertRatedByCurrentUser(int RevieweeId, int ReviewerId)
+        {
+            try
+            {
+
+                ///Get expert/post rating from the database
+                ///
+                var result = _ctx.Ratings
+                    .Where(s => s.UserId == RevieweeId);
+
+                if (result == null)
+                {
+
+                    return false;
+                }
+                else
+                {
+                    if (result.Where(s => s.RaterId == ReviewerId).Any())
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
+        ///Add user Reviews
+        public void AddUserReviewComment(Review rev)
+        {
+            User reviewee = _ctx.Users
+                  .Include(s => s.Reviews)
+                  .Single(s => s.Id == rev.RevieweeID);
+
+            reviewee.Reviews.Add(rev);
+
+            _ctx.Users.Update(reviewee);
+            _ctx.SaveChanges();
+        }
+
+        ///Add message to db
+        public void AddMessageToDB(Message msg)
+        {
+            _ctx.Messages.Add(msg);
+            _ctx.SaveChanges();
+        }
+
     }
 }

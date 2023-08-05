@@ -4,21 +4,17 @@
 <div class="row">
 
     <div class="col-12">
-        <br />
-        <h4>Details of Request with associated Quotes</h4>
+        <div class="col badge text-black card-title">
+            <h4> Details of Request: @Model.Title </h4>
+        </div>
         <br />
         <div class="col float-start w-100">
             <img style="width: 200px; height: 200px; object-fit:contain" src="~/UsersProfile/@Model.ClientImgUrl" alt="Client Image" />
         </div>
 
-        <div class="col badge text-black card-title">
-            <h2>@Model.Title</h2>
-        </div>
         <div class="col">
-            <span>@Model.Description</span>
+            <p>.</p>
         </div>
-
-        <br />
 
         <div class="col card-text">
             <span class="badge text-black">Name of Client:</span> @Model.ClienteleFirstName  @Model.ClienteleLastName
@@ -46,6 +42,14 @@
         </div>
 
         <br />
+        
+        <div class="col">
+            <span>@Model.Description</span>
+        </div>
+
+        <br />
+
+        
 
         @* Attached resouces section*@
         <h3>Attached Resources</h3>
@@ -131,7 +135,7 @@
 
         <div class="col card-text">
 
-            <a class="badge text-black" href="">Fixer's Name:     @Model.CreateQuoteViewModel.FixerFirstNames  @Model.CreateQuoteViewModel.FixerLastName </a>
+            <a class="badge text-black" asp-action="FixerDetails" asp-controller="FixerSpace" asp-route-FixerId="@Model.CreateQuoteViewModel.FixerId">Fixer's Name:     @Model.CreateQuoteViewModel.FixerFirstNames  @Model.CreateQuoteViewModel.FixerLastName </a>
         </div>
         <div class="col card-text">
             <span class="badge text-black">Fixer Address:</span> @Model.CreateQuoteViewModel.FixerAddress

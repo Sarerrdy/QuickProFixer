@@ -25,6 +25,22 @@ namespace QuickProFixer.Controllers
         string feedback = "";
         bool isReloading = true;
 
+
+        /// //Detailed star Rating Properties
+
+        int fiveTotal = 0;
+        int fourTotal = 0;
+        int threeTotal = 0;
+        int twoTotal = 0;
+        int oneTotal = 0;
+
+        int fivePercent;
+        int fourPercent;
+        int threePercent;
+        int twoPercent;
+        int onePercent;
+
+
         public FixerSpaceController(ILogger<HomeController> logger, IQuickProFixerRepository repo, IWebHostEnvironment environment, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _logger = logger;           
@@ -50,16 +66,26 @@ namespace QuickProFixer.Controllers
 
 
         [Authorize]
-        public ViewResult FixerDetails(int FixerId)
+        public async Task<IActionResult> FixerDetails(string msg, int FixerId)
         {
-            if (FixerId == 0)
+          
+            var vm = _repo.GetUserDatails(FixerId);
+            
+            //Clientele info
+            vm.ClienteleUser = _userManager.GetUserAsync(User).Result;
+            if (_signInManager.IsSignedIn(User))
             {
-                FixerId = _userManager.GetUserAsync(User).Result.Id;
+                vm.IsClienteleLogin = true;
+                vm.IsRated = _repo.IsExpertRatedByCurrentUser(FixerId, vm.ClienteleUser.Id);
             }
-            var user = _repo.GetUser(FixerId);
-            FSFixerDetailsViewModel vm = new FSFixerDetailsViewModel();
-            vm.FixerId = user.FirstOrDefault().Id;
-            vm.FirstName = user.FirstOrDefault().FirstName;
+
+           
+            if (!string.IsNullOrEmpty(msg))
+            {
+                vm.CommentAddedNotifier = msg;
+            }
+
+
             return View(vm);
         }
 
@@ -295,6 +321,159 @@ namespace QuickProFixer.Controllers
             //    vm.IsCurrentUserClientele = true;
             //}
             return View(vm);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> PostStarRatingAndReview(FSFixerDetailsViewModel model, int Id)
+        {
+            var commenter = await _userManager.GetUserAsync(User);
+            string RatingFeedback = "";
+            string ReviewFeedBack = "";
+
+
+            //////////Add Star Rating to dataBase////
+            /// 
+            if (model.RatingRadio > 0)
+            {
+                ////Get starRating frm db 
+                var StarRatingResult = _repo.GetStarRatingFromDb(Id).ToList();
+
+                Rating starRating = new Rating();
+                starRating.UserId = Id;
+                starRating.RatingFor = "Experts";
+                starRating.RaterId = commenter.Id;
+                switch (model.RatingRadio)
+                {
+                    case 1:
+                        starRating.One += 1;
+                        break;
+
+                    case 2:
+                        starRating.Two += 1;
+                        break;
+
+                    case 3:
+                        starRating.Three += 1;
+                        break;
+
+                    case 4:
+                        starRating.Four += 1;
+                        break;
+
+                    case 5:
+                        starRating.Five += 1;
+                        break;
+                }
+
+                DetailedStarRatingProcessor(StarRatingResult);
+                _repo.AddStarRatingToDB(starRating, oneTotal, twoTotal, threeTotal, fourTotal, fiveTotal);
+                RatingFeedback = "Rating";
+
+            }
+
+
+            //////////Add Comments to dataBase////
+            /// 
+            if (!string.IsNullOrWhiteSpace(model.Comment))
+            {
+
+                Review comment = new Review
+                {
+                    CommentDate = DateTime.Now.Date,
+                    Content = model.Comment,
+                    RevieweeID = Id,
+                    ReviewerID = commenter.Id
+                };
+
+                _repo.AddUserReviewComment(comment);
+
+                ReviewFeedBack = "Comments";
+            }
+
+            if (!string.IsNullOrEmpty(RatingFeedback) && !string.IsNullOrEmpty(ReviewFeedBack))
+            {
+                model.CommentAddedNotifier = "your Rating and Comments were added sucessfully";
+            }
+            else if (string.IsNullOrEmpty(RatingFeedback) && !string.IsNullOrEmpty(ReviewFeedBack))
+            {
+                model.CommentAddedNotifier = "your Comments were added sucessfully";
+            }
+            else if (!string.IsNullOrEmpty(RatingFeedback) && string.IsNullOrEmpty(ReviewFeedBack))
+            {
+                model.CommentAddedNotifier = "your Rating was summited sucessfully";
+            }
+            else
+            {
+                model.CommentAddedNotifier = "Something went wrong!!!";
+            }
+
+
+            return RedirectToAction("FixerDetails", new { msg = model.CommentAddedNotifier, FixerId = Id });
+        }
+
+        public void DetailedStarRatingProcessor(List<Rating> StarRatings)
+        {
+            // var Ratings = repo.GetStarRatingFromDb(RevieweeId).ToList();
+            if (StarRatings != null && StarRatings.Count > 0)
+            {
+                foreach (var p in StarRatings)
+                {
+                    fiveTotal += p.Five;
+                    fourTotal += p.Four;
+                    threeTotal += p.Three;
+                    twoTotal += p.Two;
+                    oneTotal += p.One;
+                }
+
+                var total = fiveTotal + fourTotal + threeTotal + twoTotal + oneTotal;
+
+                fivePercent = fiveTotal * 100 / total;
+                fourPercent = fourTotal * 100 / total;
+                threePercent = threeTotal * 100 / total;
+                twoPercent = twoTotal * 100 / total;
+                onePercent = oneTotal * 100 / total;
+            }
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> PostMessage(FSFixerDetailsViewModel model, int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                var sender = await _userManager.GetUserAsync(User);
+                var reciever = _repo.GetUser(Id).FirstOrDefault();
+
+                Message msg = new Message
+                {
+                    MsgTitle = model.Message.MsgTitle,
+                    MsgContent = model.Message.MsgContent,
+                    MsgDate = DateTime.Now.Date,
+                    RecieverId = reciever.Id,
+                    RecieverUserName = reciever.Email,
+                    SenderId = sender.Id,
+                    SenderUserName = sender.Email
+                };
+
+
+
+                /////add message to dataBase////
+                _repo.AddMessageToDB(msg);
+
+                model.CommentAddedNotifier = "your message was sent sucessfully";
+
+
+                return RedirectToAction("ExpertDetails", new { msg = model.CommentAddedNotifier, RevieweeId = Id });
+            }
+            else
+            {
+                model.CommentAddedNotifier = "something went wrong || your message could not be sent";
+
+                return RedirectToAction("ExpertDetails", new { msg = model.CommentAddedNotifier, RevieweeId = Id });
+            }
+
         }
 
     }

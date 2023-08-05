@@ -51,6 +51,8 @@ namespace QuickProFixer.Services
         SendRequestViewModel GetFixersFromClosedProximity(string lgaName, int serviceId, int requestId, string requestTitle, int senderId);
 
         IEnumerable<User> GetUser(int Id);
+        FSFixerDetailsViewModel GetUserDatails(int userId);
+
 
         string UpdateRequest(Request request);
         void DeleteRequest(Request request);
@@ -62,5 +64,15 @@ namespace QuickProFixer.Services
         void DeleteSingleSentNotification(SentNotification sentNotification);
         string UpdateSentNotification(int sentNotificationId, int fixerStatuseCode, int clientStatuseCode);
         string UpdateRequestIsContractedStatus(bool isContracted, bool isClientMarkCompleted, int requestId, int fixerId, int quoteId);
+
+
+        ///Ratings and Reviews
+        IEnumerable<Rating> GetStarRatingFromDb(int userId);
+        void AddStarRatingToDB(Rating starRating, int one, int two, int three, int four, int five);
+        void AddUserReviewComment(Review rev);
+        bool IsExpertRatedByCurrentUser(int RevieweeId, int ReviewerId);
+
+        //Messages
+        void AddMessageToDB(Message msg);
     }
 }

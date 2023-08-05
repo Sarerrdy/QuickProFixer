@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuickProFixer.Models.Context;
 
@@ -11,9 +12,10 @@ using QuickProFixer.Models.Context;
 namespace QuickProFixer.Migrations
 {
     [DbContext(typeof(QuickProFixerContext))]
-    partial class QuickProFixerContextModelSnapshot : ModelSnapshot
+    [Migration("20230728185946_AddRatings")]
+    partial class AddRatings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

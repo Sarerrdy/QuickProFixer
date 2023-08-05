@@ -1,4 +1,382 @@
 ﻿@model QuickProFixer.ViewModels.FSFixerDetailsViewModel
 
 
-<h1>Welcome to Fixers detailed page</h1>
+<h4>@Model.FixerUser.FirstName @Model.FixerUser.LastName  Profile </h4>
+
+<div class="row">
+
+ <div class="col-md-9">   
+
+     <div class="card card-body">
+            <div class="row">
+                <div class="col-md">
+                    <div>
+                    <img style="max-width:200px; max-height:200px" src="~/UsersProfile/@Model.FixerUser.ProfileImgUrl" />
+
+                    </div>
+                    <div>
+                    
+                        <div class="row">
+                            <div class="col-4">
+                                <span class="fa fa-location-arrow">From</span>
+                            </div>
+                            <div class="col">
+                                <span>@Model.Contact.Town, @Model.Contact.Country</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <span class="fa fa-user">Member since</span>
+                            </div>
+                            <div class="col">
+                            <span>@Model.FixerUser.JoinDate.ToShortDateString()</span>
+                            </div>
+                        </div>
+
+                       
+
+            <div class="row">
+                <div class="col-4">
+                    <span class="">Average rate:</span>
+                </div>
+                <div class="col">
+                <span>₦@Model.FixerUser.Profile.StartingPrice </span>
+                </div>
+            </div>
+                        <br />
+
+
+             <div class="row">
+                @{
+
+                    var rating = Model.FixerUser.RatingScore;
+                        var rating1 = (rating * 90) / 5;
+                        var rate = rating1.ToString() + "px";
+
+                        <br />
+
+                        <div class="col-4">
+                            <div style="display:inline-block; width:100px">
+                                <div style="position:absolute">
+                                    <i class="fa fa-star-o" aria-hidden="true" style="color:goldenrod"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true" style="color:goldenrod"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true" style="color:goldenrod"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true" style="color:goldenrod"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true" style="color:goldenrod"></i>
+                                </div>
+
+                                <div style="position: relative; overflow:hidden; white-space:nowrap; width:@rate">
+                                    <i class="fa fa-star" aria-hidden="true" style="color:goldenrod"></i>
+                                    <i class="fa fa-star" aria-hidden="true" style="color:goldenrod"></i>
+                                    <i class="fa fa-star" aria-hidden="true" style="color:goldenrod"></i>
+                                    <i class="fa fa-star" aria-hidden="true" style="color:goldenrod"></i>
+                                    <i class="fa fa-star" aria-hidden="true" style="color:goldenrod"></i>
+                                </div>
+
+                            </div>
+                        </div>
+
+                                <div class="col pull-right">
+                                    <div class="badge bg-black"> @rating</div>
+                            <div class="badge text-black">(@Model.FixerUser.TotalRatingCount Votes)</div>
+                        </div>
+                }
+            </div>
+                        <br />
+
+
+
+                            <div>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-3 badge text-black"> 5 star (@Model.Five votes) </div>
+                                        <div class="col">
+                                            <div class="progress" style="height:10px; margin:5px">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="@Model.FivePercentValue" aria-valuemin="0" aria-valuemax="100" style="width:@Model.FivePercent; background-color:goldenrod"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1 badge text-black">@Model.FivePercentValue </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-3 badge text-black"> 4 star (@Model.Four votes) </div>
+                                        <div class="col">
+                                            <div class="progress" style="height:10px; margin:5px">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="@Model.FourPercentValue" aria-valuemin="0" aria-valuemax="100" style="width:@Model.FourPercent; background-color:goldenrod"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1 badge text-black">@Model.FourPercentValue </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-3 badge text-black"> 3 star (@Model.Three votes) </div>
+                                        <div class="col">
+                                            <div class="progress" style="height:10px; margin:5px">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="@Model.ThreePercentValue" aria-valuemin="0" aria-valuemax="100" style="width:@Model.ThreePercent; background-color:goldenrod"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1 badge text-black">@Model.ThreePercentValue </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-3 badge text-black"> 2 star (@Model.Two votes) </div>
+                                        <div class="col">
+                                            <div class="progress" style="height:10px; margin:5px">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="@Model.TwoPercentValue" aria-valuemin="0" aria-valuemax="100" style="width:@Model.TwoPercent; background-color:goldenrod"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1 badge text-black">@Model.TwoPercentValue </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-3 badge text-black"> 1 star (@Model.One votes) </div>
+                                        <div class="col">
+                                            <div class="progress" style="height:10px; margin:5px">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="@Model.OnePercentValue" aria-valuemin="0" aria-valuemax="100" style="width:@Model.OnePercent; background-color:goldenrod"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1 badge text-black">@Model.OnePercentValue  </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                    </div>
+                </div>
+
+
+                <div class="col-md">
+                    @*<div class="d-sm-block">
+                        <span class="d-sm-flex justify-content-end"> 100% </span>
+                        <span class="d-sm-flex justify-content-end">Job Success</span>
+                        <span class="d-sm-flex justify-content-end badge"><span class="badge badge-dark">@Model.CurrentExpertUser.AppUser.ExpertUser.Jobs </span><span>Jobs</span></span>
+                        <span class="d-sm-flex justify-content-end"><span class="badge">Rate: </span><span class="badge badge-dark">₦@Model.CurrentExpertUser.StartingPrice</span><span class="badge">per sqrm</span></span>
+                    </div>*@
+                </div>
+            </div>
+
+            <br />
+            <h4>
+            @Model.FixerUser.Profile.ServiceType  and   @Model.FixerUser.Profile.OtherSkills
+            </h4>
+            <h6 class="text-justify">
+            @Model.FixerUser.Profile.DetailedDescription
+            </h6>
+
+
+
+
+
+
+
+
+        </div>
+
+    <br />
+    <br />
+
+
+    <hr class="bg-dark" />
+    <div>       
+         <div>           
+            <h5 class="text-black"> Join Discussion | <a href="#">Community Guidelines</a> </h5>
+        </div> 
+    </div>
+
+    <div class="card-body text-light bg-dark">
+        <h5 class="font-weight-bold">QuickProFixer Comment Policy</h5>
+        <h6>Do  not Post advertisements, offensive materials, profanity or personal attacks. Please be considerate of others. Please read our <a asp-action="" asp-controller="">Comment Policy</a> before commenting </h6>
+    </div>
+    <br />
+    <p class="badge text-black"> @Model.AllReviews.Count() comments </p>
+
+    <hr class="bg-dark" />
+
+
+    <div class="card card-body">
+        <div>
+            <div class="bg-light d-flex justify-content-between">
+                <div class="">Work history and feedback</div>
+
+                <div class="dropdown show">
+                    <a class="btn btn-light  dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Newest first
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">More Action</a>
+                        <a class="dropdown-item" href="#">Another Action</a>
+
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+
+            <div class="col">
+                @{
+
+                    foreach (var p in Model.AllReviews)
+                    {
+                        //var Reviewer = Model.AllUsers.Single(s => s.Id == p.ReviewerID);
+
+                        <div class="media">
+                            <img class="card-img" src="~/UsersProfile/@p.User.ProfileImgUrl" style="max-width:80px; max-height:60px" alt="Card image cap">
+
+                            <div>
+                                <h6 class="text-dark font-weight-bold">@p.User.FirstName</h6>
+                                <h6 class="text-dark">@p.Content</h6>
+                                <div class="text-danger"> @p.CommentDate.ToShortDateString()</div>
+                            </div>
+
+                        </div>
+
+                        <br />
+
+                    }
+                }
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <p></p>
+
+
+    <form method="post" asp-action="PostStarRatingAndReview" asp-controller="FixerSpace" asp-route-Id="@Model.FixerUser.Id">
+        <div class="form-group">
+
+            <div class="form-control bg-light">
+
+
+
+                @{
+                   
+                    if (Model.IsRated)
+                    {
+
+
+                        <div class="form-group">
+                            <label class="text-success">@Model.CommentAddedNotifier</label>
+                            <span asp-validation-for="Comment" class="text-danger"></span>
+                            <textarea id="commentTextArea" disabled asp-for="Comment" placeholder="add your comment" rows="3" class="form-control"></textarea>
+                            <br />
+
+                            <button id="addCommentBtn" disabled type="submit" class="btn-sm btn-light">add Comment</button>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <span class="text-black">Please Rate @Model.FixerUser.FirstName now</span>
+
+                        <br />
+
+                        <div class="form-control">
+                            <div>
+                                <span><input id="RatingRadio" onclick="ActivateRatingCommentBtn()" type="radio" asp-for="RatingRadio" value="@Model.RatingRadios.ElementAt(4)" /></span>
+                                <span>5</span>
+                                <span class="fa fa-star" style="color:goldenrod"></span>
+                                <span class="fa fa-star" style="color:goldenrod"></span>
+                                <span class="fa fa-star" style="color:goldenrod"></span>
+                                <span class="fa fa-star" style="color:goldenrod"></span>
+                                <span class="fa fa-star" style="color:goldenrod"></span>
+                            </div>
+                            <div>
+                                <span><input id="RatingRadio" onclick="ActivateRatingCommentBtn()" type="radio" asp-for="RatingRadio" value="@Model.RatingRadios.ElementAt(3)" /></span>
+                                <span>4</span>
+                                <span class="fa fa-star" style="color:goldenrod"></span>
+                                <span class="fa fa-star" style="color:goldenrod"></span>
+                                <span class="fa fa-star" style="color:goldenrod"></span>
+                                <span class="fa fa-star" style="color:goldenrod"></span>
+                            </div>
+                            <div>
+                                <span><input id="RatingRadio" onclick="ActivateRatingCommentBtn()" type="radio" asp-for="RatingRadio" value="@Model.RatingRadios.ElementAt(2)" /></span>
+                                <span>3</span>
+                                <span class="fa fa-star" style="color:goldenrod"></span>
+                                <span class="fa fa-star" style="color:goldenrod"></span>
+                                <span class="fa fa-star" style="color:goldenrod"></span>
+                            </div>
+                            <div>
+                                <span><input id="RatingRadio" onclick="ActivateRatingCommentBtn()" type="radio" asp-for="RatingRadio" value="@Model.RatingRadios.ElementAt(1)" /></span>
+                                <span>2</span>
+                                <span class="fa fa-star" style="color:goldenrod"></span>
+                                <span class="fa fa-star" style="color:goldenrod"></span>
+                            </div>
+                            <div>
+                                <span><input id="RatingRadio" onclick="ActivateRatingCommentBtn()" type="radio" asp-for="RatingRadio" value="@Model.RatingRadios.ElementAt(0)" /></span>
+                                <span>1</span>
+                                <span class="fa fa-star" style="color:goldenrod"></span>
+                            </div>
+
+                            <button id="addRatingBtn" disabled type="submit" class="btn btn-sm btn-light">Rate @Model.FixerUser.FirstName Now</button>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label class="text-success">@Model.CommentAddedNotifier</label>
+                            <span asp-validation-for="Comment" class="text-danger"></span>
+                            <textarea id="commentTextArea" asp-for="Comment" placeholder="add your comment" rows="3" class="form-control"></textarea>
+                            <br />
+
+                            <button id="addCommentBtn" disabled type="submit" class="btn-sm btn-light">add Comment</button>
+                        </div>
+                    }
+                                       
+                }
+
+            </div>
+        </div>
+
+    </form>
+
+    <p></p>
+ </div>
+
+    <div class="bg-light col-md-3">
+
+        <div class="text-center">           
+                
+            <h4>
+                <span class="card-title font-weight-bold">
+                    Do you want to Discuss your project with Me? 
+                </span>
+            </h4>
+         
+            <br />
+
+           
+            <a class="btn btn-primary" href="tel:@Model.FixerUser.PhoneNumber"> Phone me </a> ||  <a class="btn btn-primary" href="mailto:@Model.FixerUser.Email">Email me</a>
+            <br />
+            OR
+            <h6><span class="card-text">Direct message</span></h6>
+
+            <form method="post" asp-action="PostMessage" asp-controller="Expert" asp-route-Id="@Model.FixerUser.Id">
+
+
+                <div class="form-group">
+
+                    <input id="SendMsgTitleBox" asp-for="Message.MsgTitle" class="form-control" type="text" placeholder="Title" />
+                    <span asp-validation-for="Message.MsgTitle" class="text-danger"></span>
+                    <br />
+                    <textarea id="SendMsgTextBox" asp-for="Message.MsgContent" class="form-control" rows="6" type="text" placeholder="content"></textarea>
+                    <span asp-validation-for="Message.MsgContent" class="text-danger"></span>
+                    <br />
+                </div>
+
+                <button id="sentMsgBtn" disabled type="submit" class="btn-sm btn-light">Sent message</button>               
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/js/CommentsChecks.js"></script>

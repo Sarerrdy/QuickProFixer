@@ -208,7 +208,7 @@
                </div>
                
                <div class="col">
-                            <input asp-for="ImgUrl_1" type="file" class="form-control" />
+                            <input asp-for="ImgUrl_1" type="file" accept=".png,.jpg,.jpeg" class="form-control" />
                </div>
                         <span asp-validation-for="ImgUrl_1" class="text-danger"></span>
             </div>
@@ -220,7 +220,7 @@
                     <label>2nd Image</label>
                 </div>
                 <div class="col">
-                            <input asp-for="ImgUrl_2" type="file" class="form-control" />
+                            <input asp-for="ImgUrl_2" type="file" accept=".png,.jpg,.jpeg" class="form-control" />
                  </div>
                         <span asp-validation-for="ImgUrl_2" class="text-danger"></span>
             </div>
@@ -232,7 +232,7 @@
                     <label>3rd Image</label>
             </div>
             <div class="col">
-                            <input asp-for="ImgUrl_3" type="file" class="form-control" />
+                            <input asp-for="ImgUrl_3" type="file" accept=".png,.jpg,.jpeg" class="form-control" />
              </div>
                         <span asp-validation-for="ImgUrl_3" class="text-danger"></span>
             </div>
@@ -241,10 +241,10 @@
 
            <div class="form-group">
             <div class="col">
-                    <label>Video Url</label>
+                    <label>Video Url (mp4 only)</label>
             </div>
             <div class="col">
-                            <input asp-for="VideoUrl" type="file" class="form-control" />
+                            <input asp-for="VideoUrl" type="file" accept=".mp4" class="form-control" />
              </div>
                         <span asp-validation-for="VideoUrl" class="text-danger"></span>
             </div>
@@ -253,10 +253,10 @@
 
              <div class="form-group">
             <div class="col">
-                    <label>Audio Url</label>
+                    <label>Audio Url (mp3 only)</label>
             </div>
             <div class="col">
-                            <input asp-for="AudioUrl" type="file" class="form-control" />
+                            <input asp-for="AudioUrl" type="file" accept=".mp3" class="form-control" />
              </div>
                         <span asp-validation-for="AudioUrl" class="text-danger"></span>
             </div>
@@ -265,10 +265,10 @@
 
               <div class="form-group">
             <div class="col">
-                    <label>Pdf Url</label>
+                    <label>Pdf Url (.pdf only)</label>
             </div>
             <div class="col">
-                            <input asp-for="PdfUrl" type="file" class="form-control" />
+                            <input asp-for="PdfUrl" type="file" accept=".pdf" class="form-control" />
              </div>
                         <span asp-validation-for="PdfUrl" class="text-danger"></span>
             </div>

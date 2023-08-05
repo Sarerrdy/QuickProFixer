@@ -13,6 +13,6 @@
         public int Four { get; set; }
         public int Five { get; set; }
 
-        public virtual User? User { get; set; }
+        public virtual User? User { get; set; } 
     }
 }

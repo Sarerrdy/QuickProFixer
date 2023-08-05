@@ -5,47 +5,52 @@
     
     <div class="col-12">
         <br />
-        <h4>Details of Request with associated Quotes</h4>
+        <div class="col badge text-black card-title">
+            <h4> Details of Request: @Model.Title </h4>
+        </div>
+      
         <br/>
             <div class="col float-start w-100">
                 <img style="width: 200px; height: 200px; object-fit:contain" src="~/UsersProfile/@Model.ClientImgUrl" alt="Client Image"/>
-            </div>
+            </div> 
+            
+        <div class="col">
+            <p>.</p>           
+        </div>
 
-            <div class="col badge text-black card-title">
-                <h2>@Model.Title</h2>
-            </div>
+        <div class="col card-text">           
+            <span class="badge text-black">Name of Client:</span> @Model.ClienteleFirstName  @Model.ClienteleLastName
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Location of the Fix Request:</span> @Model.Address
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Date of Requested:</span> @Model.DateSummited.ToShortDateString()
+        </div>
+        <div class="col card-text">
+            <span class="badge text-black">Possible start Date:</span> @Model.Urgency
+        </div>
+
+        <div class="col card-text">
+            <span class="badge text-black">This Request Notification was sent to:</span> @Model.SentNotisficationCount Fixers
+        </div>
+
+        <div class="col card-text">
+            <span class="badge text-black">Total Response Count for this Request:</span> @Model.QuotesCount
+        </div>
+
+        <div class="col card-text">
+            <span class="badge text-black">Clientele Rating:</span> @Model.RatingScore
+        </div>
+
+        <br />
             <div class="col">
                 <span>@Model.Description</span>
             </div>
 
             <br/>
 
-             <div class="col card-text">
-               <span class="badge text-black">Name of Client:</span> @Model.ClienteleFirstName  @Model.ClienteleLastName
-            </div>
-            <div class="col card-text">
-               <span class="badge text-black">Location of the Fix Request:</span> @Model.Address
-            </div>  
-            <div class="col card-text">
-               <span class="badge text-black">Date of Requested:</span> @Model.DateSummited.ToShortDateString()
-            </div>
-            <div class="col card-text">
-               <span class="badge text-black">Possible start Date:</span> @Model.Urgency
-            </div>
             
-            <div class="col card-text">
-               <span class="badge text-black">This Request Notification was sent to:</span> @Model.SentNotisficationCount Fixers
-            </div>
-
-             <div class="col card-text">
-               <span class="badge text-black">Total Response Count for this Request:</span> @Model.QuotesCount
-            </div>
-
-            <div class="col card-text">
-               <span class="badge text-black">Clientele Rating:</span> @Model.RatingScore
-            </div>
-        
-            <br />
 
            @* Attached resouces section*@
             <h3>Attached Resources</h3>
@@ -175,7 +180,7 @@
                                 <img style="max-width:80px; max-height:60px" src="@fixer.FixerImgUrl" alt="Profile Image" />
                             </div>
                             <div class="col-10">
-                                <div class="col badge text-black"><h4>@fixer.FullName</h4></div>
+                                <a class="col badge text-black btn-link" asp-action="FixerDetails" asp-controller="FixerSpace" asp-route-FixerId="@fixer.FixerId"><h4>@fixer.FullName</h4></a>
                                 <div class="col card-body">
                                     <span>@fixer.ShortDescription</span>
                                 </div>
