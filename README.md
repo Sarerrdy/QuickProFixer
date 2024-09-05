@@ -33,3 +33,6 @@ QuickProFixer is a web application hub designed to connect skilled household tec
 ## Authors
 
 - Edmond Ina - [@Sarerrdy](https://github.com/sarerrdy)
+
+## Demo
+- free hostin: (https://sarerrdy.bsite.net/)
