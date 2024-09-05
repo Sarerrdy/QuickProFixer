@@ -17,8 +17,19 @@ QuickProFixer is a web application hub designed to connect skilled household tec
 
 ## Installation
 - git clone https://github.com/Sarerrdy/QuickProFixer.git
-cd QuickProFixer
+- cd QuickProFixer
 - dotnet restore
 - dotnet build
-- configure the db connection string
+- configure the db connection string in appsettings.json
 - dotnet run
+
+## Usage
+- Register an account as a technician or client.
+- Create a profile and fill in the necessary details.
+- Post a job if you are a client, or browse available jobs if you are a technician.
+- Bid on jobs or accept bids as per your role.
+- Leave a review to help others make informed decisions.
+
+## Authors
+
+- Edmond Ina - [@Sarerrdy](https://github.com/sarerrdy)
