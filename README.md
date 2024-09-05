@@ -1,7 +1,7 @@
 ### QuickProFixer
 
 ## Description
-QuickProFixer is a web application hub designed to connect skilled household technicians with potential clients. Built using ASP.NET Core, QuickProFixer aims to simplify the process of finding and hiring reliable technicians for various household tasks.
+QuickProFixer is an online web hub designed to connect skilled household technicians with potential clients. Built using ASP.NET Core, QuickProFixer aims to simplify the process of finding and hiring reliable technicians for various household tasks.
 
 ## Features
 - User-Friendly Interface: Easy-to-navigate platform for both technicians and clients.
